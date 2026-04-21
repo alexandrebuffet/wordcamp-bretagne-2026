@@ -254,8 +254,8 @@
 			font-family: #{wp-preset-font-family('unbounded')};
 		}
 
-		tbody th,
-		tbody td {
+		tbody tr:not(:last-child) th,
+		tbody tr:not(:last-child) td {
 			border-bottom: 2px solid #{wp-preset-color('contrast')};
 			text-align: center;
 		}
@@ -384,14 +384,6 @@
 		box-sizing: border-box;
 		background-color: #{wp-preset-color('base')};
 	}
-
-	select {
-		appearance: none;
-		background-image: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M6 9L12 15L18 9' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' stroke='currentColor'/%3E%3C/svg%3E");
-		background-repeat: no-repeat;
-		background-position: right #{wp-preset-spacing('20')} center;
-		background-size: 20px;
-	}
 }
 
 #tix input[type='submit'],
@@ -448,7 +440,6 @@
 		td::before {
 			white-space: nowrap;
 			font-weight: 700;
-			color: color-mix(in oklch, #{wp-preset-color('contrast')} 75%, transparent);
 		}
 	}
 
@@ -472,6 +463,8 @@
 		display: block;
 		width: auto;
 		background: #{wp-preset-color('contrast')};
+		color: #{wp-preset-color('base')};
+		font-family: #{wp-preset-font-family('unbounded')};
 		padding: #{wp-preset-spacing('20')} #{wp-preset-spacing('30')};
 	}
 
