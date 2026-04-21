@@ -236,6 +236,8 @@
 // }
 
 .tix-js {
+	max-width: var(--wp--style--global--content-wide) !important;
+
 	.tix_tickets_table {
 		border-collapse: collapse;
 		width: 100%;
@@ -286,7 +288,7 @@
 			margin-top: 2rem;
 
 			.tix-row-total td:last-child {
-				border-top: 2px solid color-mix(in oklch, var(--wp--preset--color--accent, #4f46e5) 18%, #0000);
+				border-top: 2px solid #{wp-preset-color('contrast')};
 				font-weight: 700;
 			}
 		}
@@ -297,6 +299,12 @@
 		&.tix-attendee-form tbody td {
 			border: none;
 			padding: #{wp-preset-spacing('20')} #{wp-preset-spacing('30')};
+		}
+
+		&.tix-order-summary tbody th,
+		&.tix-attendee-form tbody th {
+			background: #{wp-preset-color('contrast')};
+			color: #{wp-preset-color('base')};
 		}
 
 		&.tix-attendee-form {
@@ -366,6 +374,11 @@
 
 	.tix-notice {
 		background: #{wp-preset-color('accent-1')};
+	}
+
+	.camptix-invoice-toggle-wrapper {
+		width: 100%;
+		margin: #{wp-preset-spacing('40')} 0;
 	}
 }
 
@@ -447,7 +460,7 @@
 	}
 
 	.tix-column-remaining::before {
-		content: 'Restant : ';
+		content: 'Restants : ';
 	}
 
 	.tix-column-quantity::before {
