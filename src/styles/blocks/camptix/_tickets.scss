@@ -254,8 +254,8 @@
 			font-family: #{wp-preset-font-family('unbounded')};
 		}
 
-		tbody tr:not(:last-child) th,
-		tbody tr:not(:last-child) td {
+		tbody th,
+		tbody td {
 			border-bottom: 2px solid #{wp-preset-color('contrast')};
 			text-align: center;
 		}
@@ -435,11 +435,15 @@
 			padding-left: 50%;
 			padding-top: 12px;
 			padding-bottom: 12px;
-		}
 
-		td::before {
-			white-space: nowrap;
-			font-weight: 700;
+			&:last-child {
+				border-bottom: none;
+			}
+
+			&::before {
+				white-space: nowrap;
+				font-weight: 700;
+			}
 		}
 	}
 
@@ -464,8 +468,12 @@
 		width: auto;
 		background: #{wp-preset-color('contrast')};
 		color: #{wp-preset-color('base')};
-		font-family: #{wp-preset-font-family('unbounded')};
 		padding: #{wp-preset-spacing('20')} #{wp-preset-spacing('30')};
+	}
+
+	.tix-js .tix_tickets_table tbody .tix-column-title {
+		font-weight: 700;
+		font-family: #{wp-preset-font-family('unbounded')};
 	}
 
 	.tix-js .tix_tickets_table .tix-column-description label + br {
