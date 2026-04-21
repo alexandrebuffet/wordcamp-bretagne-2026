@@ -426,6 +426,7 @@
 	text-decoration: none;
 	text-decoration-thickness: auto;
 	text-transform: inherit;
+	border-radius: 999px;
 
 	&:hover {
 		background-color: color-mix(in oklch, #{wp-preset-color('contrast')} 85%, transparent);
