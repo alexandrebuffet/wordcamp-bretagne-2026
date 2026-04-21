@@ -432,9 +432,8 @@
 		td {
 			border: 0;
 			position: relative;
-			padding-left: 50%;
-			padding-top: 12px;
-			padding-bottom: 12px;
+			padding-top: #{wp-preset-spacing('20')};
+			padding-bottom: #{wp-preset-spacing('20')};
 
 			&:last-child {
 				border-bottom: none;
