@@ -296,9 +296,10 @@
 		&.tix-order-summary tbody th,
 		&.tix-attendee-form tbody th,
 		&.tix-order-summary tbody td,
-		&.tix-attendee-form tbody td {
+		&.tix-attendee-form tbody td
+		&.camptix-invoice-details tbody td {
 			border: none;
-			padding: #{wp-preset-spacing('20')} #{wp-preset-spacing('30')};
+			padding: #{wp-preset-spacing('30')};
 		}
 
 		&.tix-order-summary tbody th,
@@ -307,13 +308,14 @@
 			color: #{wp-preset-color('base')};
 		}
 
-		&.tix-attendee-form {
+		&.tix-attendee-form
+		&.camptix-invoice-details {
 			.tix-left {
 				text-align: right;
 				padding-right: 0.75em;
 				width: 40%;
 				color: #{wp-preset-color('contrast')};
-				font-weight: 650;
+				font-weight: 700;
 			}
 
 			.tix-right {
