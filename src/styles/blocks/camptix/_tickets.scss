@@ -413,7 +413,7 @@
 }
 
 @media (max-width: $camptix-tickets-breakpoint-max) {
-	.tix_tickets_table {
+	.tix-js .tix_tickets_table {
 		table,
 		thead,
 		tbody,
@@ -487,9 +487,10 @@
 
 	.tix-js .tix_tickets_table .tix-ticket-excerpt {
 		display: block;
-		padding: 12px 16px;
 		font-weight: 400;
 		color: color-mix(in oklch, #{wp-preset-color('contrast')} 75%, transparent);
+		padding: #{wp-preset-spacing('20')};
+    	font-size: 0.875em;
 	}
 
 	.tix-ticket-form td.tix-left,
