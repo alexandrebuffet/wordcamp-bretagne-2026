@@ -296,7 +296,7 @@
 		&.tix-order-summary tbody th,
 		&.tix-attendee-form tbody th,
 		&.tix-order-summary tbody td,
-		&.tix-attendee-form tbody td
+		&.tix-attendee-form tbody td,
 		&.camptix-invoice-details tbody td {
 			border: none;
 			padding: #{wp-preset-spacing('30')};
@@ -308,7 +308,7 @@
 			color: #{wp-preset-color('base')};
 		}
 
-		&.tix-attendee-form
+		&.tix-attendee-form,
 		&.camptix-invoice-details {
 			.tix-left {
 				text-align: right;
