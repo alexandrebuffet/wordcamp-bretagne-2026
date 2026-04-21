@@ -237,14 +237,13 @@
 
 .tix-js {
 	.tix_tickets_table {
-		border-spacing: 0;
-		border-collapse: separate;
+		border-collapse: collapse;
 		width: 100%;
 		border: 2px solid #{wp-preset-color('contrast')};
 
 		th,
 		td {
-			padding: #{wp-preset-spacing('20')};
+			padding: #{wp-preset-spacing('40')};
 		}
 
 		thead th {
@@ -252,6 +251,7 @@
 			border-bottom: 2px solid #{wp-preset-color('contrast')};
 			color: #{wp-preset-color('base')};
 			font-weight: 700;
+			font-family: #{wp-preset-font-family('unbounded')};
 		}
 
 		tbody th,
@@ -276,11 +276,10 @@
 		tbody .tix-column-price,
 		tbody .tix-column-remaining {
 			font-weight: 700;
-			color: color-mix(in oklch, #{wp-preset-color('contrast')} 75%, transparent);
 		}
 
 		tbody .tix-column-quantity select {
-			padding: #{wp-preset-spacing('10')} #{wp-preset-spacing('20')};
+			padding: #{wp-preset-spacing('20')} #{wp-preset-spacing('30')};
 		}
 
 		&.tix-order-summary {
@@ -297,7 +296,7 @@
 		&.tix-order-summary tbody td,
 		&.tix-attendee-form tbody td {
 			border: none;
-			padding: #{wp-preset-spacing('10')} #{wp-preset-spacing('20')};
+			padding: #{wp-preset-spacing('20')} #{wp-preset-spacing('30')};
 		}
 
 		&.tix-attendee-form {
@@ -383,6 +382,15 @@
 		border-radius: 32px;
 		padding: 1rem;
 		box-sizing: border-box;
+		background-color: #{wp-preset-color('base')};
+	}
+
+	select {
+		appearance: none;
+		background-image: url('data:image/svg+xml;utf8,<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 9L12 15L18 9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="currentColor"/></svg>');
+		background-repeat: no-repeat;
+		background-position: right #{wp-preset-spacing('20')} center;
+		background-size: 20px;
 	}
 }
 
@@ -404,6 +412,12 @@
 	text-decoration: none;
 	text-decoration-thickness: auto;
 	text-transform: inherit;
+
+	&:hover {
+		background-color: color-mix(in oklch, #{wp-preset-color('contrast')} 85%, transparent);
+		border-color: transparent;
+		color: var(--wp--preset--color--base);
+	}
 }
 
 @media (max-width: $camptix-tickets-breakpoint-max) {
@@ -458,7 +472,7 @@
 		display: block;
 		width: auto;
 		background: #{wp-preset-color('contrast')};
-		padding: #{wp-preset-spacing('10')} #{wp-preset-spacing('20')};
+		padding: #{wp-preset-spacing('20')} #{wp-preset-spacing('30')};
 	}
 
 	.tix-js .tix_tickets_table .tix-column-description label + br {
