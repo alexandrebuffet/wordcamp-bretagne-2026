@@ -339,6 +339,15 @@
 		&.tix--form .tix-row-health-advisory .tix-left::after {
 			content: none;
 		}
+
+		.tix-row-health-advisory td {
+			> p:first-child {
+				margin-top: 0;
+			}
+			> p:last-child {
+				margin-bottom: 0;
+			}
+		}
 	}
 
 	#tix-coupon-input {
@@ -400,7 +409,7 @@
 }
 
 #tix input[type='submit'],
-.tix-checkout-button {
+#tix .tix-submit .tix-checkout-button {
 	background-color: var(--wp--preset--color--contrast);
 	border-width: 0;
 	color: var(--wp--preset--color--base);
