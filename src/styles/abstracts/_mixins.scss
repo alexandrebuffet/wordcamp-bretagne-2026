@@ -1,0 +1,70 @@
+// Shared mixins: breakpoints, fluid `clamp`, and media helpers aligned with `$breakpoints`.
+
+@use 'sass:map';
+@use 'sass:math';
+@use 'sass:meta';
+@use 'sass:string';
+@use 'variables' as *;
+
+/// Fluid interpolation between two sizes across two viewport widths.
+@function get-clamp($value-min, $value-max, $breakpoint-min, $breakpoint-max) {
+	@if $value-min and $value-max {
+		$slope: math.div($value-max - $value-min, $breakpoint-max - $breakpoint-min);
+		$y: $slope * 100vw;
+		$intercept: $value-min - $slope * $breakpoint-min;
+		$min-value: math.min($value-min, $value-max);
+		$max-value: math.max($value-min, $value-max);
+
+		@return string.unquote('clamp(#{$min-value}, calc(#{$y} + #{$intercept}), #{$max-value})');
+	}
+
+	@return $value-min;
+}
+
+/// Media query: `min-width` for a named breakpoint from `$breakpoints`.
+@mixin breakpoint-min($name) {
+	@if not map.has-key($breakpoints, $name) {
+		@error "Unknown breakpoint `#{$name}`. Expected one of #{map.keys($breakpoints)}.";
+	}
+
+	$w: map.get($breakpoints, $name);
+
+	@media (min-width: $w) {
+		@content;
+	}
+}
+
+/// Media query: `max-width` for a named breakpoint from `$breakpoints`.
+@mixin breakpoint-max($name) {
+	@if not map.has-key($breakpoints, $name) {
+		@error "Unknown breakpoint `#{$name}`. Expected one of #{map.keys($breakpoints)}.";
+	}
+
+	$w: map.get($breakpoints, $name);
+
+	@media (max-width: $w) {
+		@content;
+	}
+}
+
+/// `min-width` using an arbitrary length (e.g. fallback when a name is not in the map).
+@mixin media-min($width) {
+	@if meta.type-of($width) != 'number' {
+		@error "`media-min` expects a length; got `#{meta.type-of($width)}`.";
+	}
+
+	@media (min-width: $width) {
+		@content;
+	}
+}
+
+/// `max-width` using an arbitrary length.
+@mixin media-max($width) {
+	@if meta.type-of($width) != 'number' {
+		@error "`media-max` expects a length; got `#{meta.type-of($width)}`.";
+	}
+
+	@media (max-width: $width) {
+		@content;
+	}
+}

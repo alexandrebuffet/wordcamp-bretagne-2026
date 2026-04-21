@@ -1,0 +1,17 @@
+// Global link styles for the remote stylesheet (extend as needed).
+
+:where(a[target="_blank"]:not(.wp-block-social-link-anchor,.jetpack-sharing-button__button))::after{content: " ↗︎";}
+
+a:not(.wp-element-button) {
+text-decoration-thickness: 0.1ch !important;
+text-decoration-color: color-mix(in oklch, currentColor 50%, transparent); 
+text-underline-offset: 0.325ch; } 
+
+a:not(.wp-element-button):is(:hover, :focus) { text-decoration-color: color-mix(in oklch, currentColor 100%, transparent);
+text-decoration-line: underline;
+text-decoration-thickness: 0.15ch !important;
+} 
+
+.has-wcbzh-display-links a:not(.wp-element-button):not(:hover, :focus) {
+    text-decoration: none;
+   } 
