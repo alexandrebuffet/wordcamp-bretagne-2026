@@ -272,6 +272,7 @@
 		}
 
 		.tix-ticket-excerpt {
+			font-size: 0.875em;
 			color: color-mix(in oklch, #{wp-preset-color('contrast')} 75%, transparent);
 		}
 
@@ -519,6 +520,7 @@
 	.tix-js .tix_tickets_table .tix-ticket-excerpt {
 		display: block;
 		font-weight: 400;
+		background-color: #{wp-preset-color('base')};
 		color: color-mix(in oklch, #{wp-preset-color('contrast')} 75%, transparent);
 		padding: #{wp-preset-spacing('20')};
     	font-size: 0.875em;
