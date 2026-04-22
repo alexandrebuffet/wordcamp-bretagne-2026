@@ -298,8 +298,14 @@
 		&.tix-order-summary tbody td,
 		&.tix-attendee-form tbody td,
 		&.camptix-invoice-details tbody td {
-			border: none;
 			padding: #{wp-preset-spacing('30')};
+		}
+
+		&.tix-order-summary tbody th,
+		&.tix-attendee-form tbody th,
+		&.tix-attendee-form tbody td,
+		&.camptix-invoice-details tbody td {
+			border: none;
 		}
 
 		&.tix-order-summary tbody th,
@@ -505,7 +511,8 @@
 	}
 
 	.tix-js .tix_tickets_table tbody .tix-column-description {
-		background: #{wp-preset-color('base')};
+		background: #{wp-preset-color('contrast')};
+		color: #{wp-preset-color('base')};
 		padding: 0;
 	}
 
@@ -528,6 +535,7 @@
 	.tix-receipt-form td.tix-right,
 	.tix_invoice_table td.tix-right {
 		width: 100% !important;
+		box-sizing: border-box;
 	}
 
 	.tix-js .tix_tickets_table.tix--form .tix-right {
