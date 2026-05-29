@@ -1,35 +1,23 @@
 .is-wcbzh-text-wrap-balance {
     text-wrap: balance;
-    }
-    
-    @media (min-width: 600px) { 
-        .is-wcbzh-hidden-at-desktop {
-            display: none !important;
-        }
-    }
-    
-    @media not all and (min-width: 600px) { 
-        .is-wcbzh-display-at-desktop {
-            display: none !important;
-        }
-    }
-    
-    .has-wcbzh-pointer-events-none {
-        pointer-events: none !important;
-    }
-    
-    .has-wcbzh-filter-grayscale-100 {
+}
+
+.has-wcbzh-pointer-events-none {
+    pointer-events: none !important;
+}
+
+.has-wcbzh-filter-grayscale-100 {
     filter: grayscale(100%) !important;
-    }
-    
-    .has-wcbzh-word-break-normal {
+}
+
+.has-wcbzh-word-break-normal {
     word-break: normal !important;
-    }
-    
-    .has-wcbzh-brutalist-shadow {
+}
+
+.has-wcbzh-brutalist-shadow {
     box-shadow: -5px 5px 0px 0 var(--wp--preset--color--black) !important;
-    }
-    
-    .has-wcbzh-margin-block-start-0 {
+}
+
+.has-wcbzh-margin-block-start-0 {
     margin-block-start: 0px !important;
-    }
+}

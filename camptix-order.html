@@ -1,0 +1,340 @@
+<div id="tix" class="tix-has-dynamic-receipts tix-js">
+    <form id="tix_checkout_form" action="/2026/billetterie/?tix_action=checkout#tix" method="POST">
+        <input type="hidden" name="tix_tickets_selected[1075]" value="1">
+
+        <h2>Résumé de la commande</h2>
+        
+        <table class="tix_tickets_table tix-order-summary">
+            <thead>
+                <tr>
+                    <th scope="col" class="tix-column-description">Description</th>
+                    <th scope="col" class="tix-column-per-ticket">Par billet</th>
+                    <th scope="col" class="tix-column-quantity">Quantité</th>
+                    <th scope="col" class="tix-column-price">Prix</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="tix-column-description">
+                        <strong>Billet simple</strong>
+                    </td>
+                    <td class="tix-column-per-ticket">
+                        €&nbsp;40.00 </td>
+                    <td class="tix-column-quantity">1</td>
+                    <td class="tix-column-price">€&nbsp;40.00</td>
+                </tr>
+                <tr class="tix-row-total">
+                    <td colspan="3" style="text-align: right">
+                    </td>
+                    <td>
+                        <span class="screen-reader-text">Total&nbsp;:</span>
+                        <strong>€&nbsp;40.00</strong>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2 id="tix-registration-information">Information d’inscription</h2>
+
+        <input type="hidden" name="tix_attendee_info[1][ticket_id]" value="1075">
+
+        <table class="tix_tickets_table tix-attendee-form">
+            <tbody>
+                <tr>
+                    <th colspan="2">
+                        1. Billet simple </th>
+                </tr>
+
+
+
+
+                <tr class="tix-row-first-name">
+                    <td class="tix-required tix-left">
+                        <label for="tix_attendee_info-1-first_name">
+                            Prénom <span aria-hidden="true" class="tix-required-star">*</span>
+                        </label>
+                    </td>
+                    <td class="tix-right">
+                        <input id="tix_attendee_info-1-first_name" name="tix_attendee_info[1][first_name]" type="text"
+                            value="Alexandre" required="">
+                    </td>
+                </tr>
+                <tr class="tix-row-last-name">
+                    <td class="tix-required tix-left">
+                        <label for="tix_attendee_info-1-last_name">
+                            Nom <span aria-hidden="true" class="tix-required-star">*</span>
+                        </label>
+                    </td>
+                    <td class="tix-right">
+                        <input id="tix_attendee_info-1-last_name" name="tix_attendee_info[1][last_name]" type="text"
+                            value="Buffet" required="">
+                    </td>
+                </tr>
+
+
+                <tr class="tix-row-email">
+                    <td class="tix-required tix-left">
+                        <label for="tix_attendee_info-1-email">
+                            E-mail <span aria-hidden="true" class="tix-required-star">*</span>
+                        </label>
+                    </td>
+                    <td class="tix-right">
+                        <input id="tix_attendee_info-1-email" class="tix-field-email" name="tix_attendee_info[1][email]"
+                            type="email" value="hello@alexandrebuffet.fr" required="">
+
+                        <input name="tix_receipt_email" type="hidden" value="1">
+                    </td>
+                </tr>
+
+
+
+
+                <tr class="tix-row-question-1190">
+                    <td class="tix-required tix-left">
+                        <label for="">
+                            Participerez-vous à la soirée ? <span aria-hidden="true" class="tix-required-star">*</span>
+                        </label>
+                    </td>
+                    <td class="tix-right">
+                        <fieldset class="tix-screen-reader-fieldset" aria-label="Participerez-vous à la soirée ?">
+                            <label>
+                                <input name="tix_attendee_questions[1][1190]" type="radio" value="Oui" required="">
+                                Oui </label><br>
+                            <label>
+                                <input name="tix_attendee_questions[1][1190]" type="radio" value="Non" required="">
+                                Non </label><br>
+                            <label>
+                                <input name="tix_attendee_questions[1][1190]" type="radio" value="Je ne sais pas encore"
+                                    required="">
+                                Je ne sais pas encore </label><br>
+                        </fieldset>
+                    </td>
+                </tr>
+
+
+                <tr class="tix-row-question-privacy">
+                    <td class="tix-required tix-left">
+                        <label for="">
+                            Voulez-vous que votre nom soit affiché sur la liste des participantes et participants&nbsp;?
+                            <a href="https://wordpress.org/about/privacy/" target="_blank">En savoir plus.</a> <span
+                                aria-hidden="true" class="tix-required-star">*</span> </label>
+                    </td>
+                    <td class="tix-right">
+                        <fieldset class="tix-screen-reader-fieldset"
+                            aria-label="Voulez-vous que votre nom soit affiché sur la page des participantes et participants&nbsp;?">
+                            <label>
+                                <input name="tix_attendee_questions[1][privacy]" type="radio" value="Oui" required="">
+                                Oui </label><br>
+                            <label>
+                                <input name="tix_attendee_questions[1][privacy]" type="radio" value="Non" required="">
+                                Non </label><br>
+                        </fieldset>
+                    </td>
+                </tr>
+
+
+                <tr class="tix-row-question-allergy">
+                    <td class="tix-required tix-left">
+                        <label for="">
+                            Avez-vous une allergie grave qui affecterait votre expérience au WordCamp&nbsp;? <span
+                                aria-hidden="true" class="tix-required-star">*</span> </label>
+                    </td>
+                    <td class="tix-right">
+                        <fieldset class="tix-screen-reader-fieldset"
+                            aria-label="Avez-vous une allergie grave qui affecterait votre expérience au WordCamp&nbsp;?">
+                            <label>
+                                <input name="tix_attendee_questions[1][allergy]" type="radio"
+                                    value="Oui (nous vous contacterons)" required="">
+                                Oui (nous vous contacterons) </label><br>
+                            <label>
+                                <input name="tix_attendee_questions[1][allergy]" type="radio" value="Non" required="">
+                                Non </label><br>
+                        </fieldset>
+                    </td>
+                </tr>
+
+
+                <tr class="tix-row-question-accommodations">
+                    <td class="tix-required tix-left">
+                        <label for="">
+                            Avez-vous besoin d’un aménagement spécial, tel qu’un interprète en langue des signes ou un
+                            accès en fauteuil roulant pour participer au WordCamp&nbsp;? <span aria-hidden="true"
+                                class="tix-required-star">*</span> </label>
+                    </td>
+                    <td class="tix-right">
+                        <fieldset class="tix-screen-reader-fieldset"
+                            aria-label="Avez-vous besoin d’un aménagement spécial, tel qu’un interprète en langue des signes ou un accès en fauteuil roulant pour participer au WordCamp&nbsp;?">
+                            <label>
+                                <input name="tix_attendee_questions[1][accommodations]" type="radio"
+                                    value="Oui (nous vous contacterons)" required="">
+                                Oui (nous vous contacterons) </label><br>
+                            <label>
+                                <input name="tix_attendee_questions[1][accommodations]" type="radio" value="Non"
+                                    required="">
+                                Non </label><br>
+                        </fieldset>
+                    </td>
+                </tr>
+
+
+                <tr class="tix-row-question-first_time_attending_wp_event">
+                    <td class="tix-required tix-left">
+                        <label for="">
+                            C‘est la première fois que vous participez à un évènement WordPress&nbsp;? <span
+                                aria-hidden="true" class="tix-required-star">*</span> </label>
+                    </td>
+                    <td class="tix-right">
+                        <fieldset class="tix-screen-reader-fieldset"
+                            aria-label="C‘est la première fois que vous participez à un évènement WordPress&nbsp;?">
+                            <label>
+                                <input name="tix_attendee_questions[1][first_time_attending_wp_event]" type="radio"
+                                    value="Oui" required="">
+                                Oui </label><br>
+                            <label>
+                                <input name="tix_attendee_questions[1][first_time_attending_wp_event]" type="radio"
+                                    value="Non" required="">
+                                Non </label><br>
+                            <label>
+                                <input name="tix_attendee_questions[1][first_time_attending_wp_event]" type="radio"
+                                    value="Je ne sais pas" required="">
+                                Je ne sais pas </label><br>
+                        </fieldset>
+                    </td>
+                </tr>
+
+
+                <tr class="tix-row-question-coc">
+                    <td class="tix-required tix-left">
+                        <label for="">
+                            Acceptez-vous de suivre le code de conduite de l’évènement&nbsp;? <span aria-hidden="true"
+                                class="tix-required-star">*</span> </label>
+                    </td>
+                    <td class="tix-right">
+                        <fieldset class="tix-screen-reader-fieldset"
+                            aria-label="Acceptez-vous de suivre le code de conduite de l’évènement&nbsp;?">
+                            <label>
+                                <input name="tix_attendee_questions[1][coc][oui]" type="checkbox" value="Oui"
+                                    required="">
+                                Oui </label><br>
+                        </fieldset>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+
+        <div class="camptix-invoice-toggle-wrapper">
+            <input type="checkbox" value="1" name="camptix-need-invoice" id="camptix-need-invoice">
+
+            <label for="camptix-need-invoice">J’ai besoin d’une facture</label>
+
+            <table class="camptix-invoice-details tix_tickets_table tix_invoice_table" style="display: table;">
+                <tbody>
+                    <tr>
+                        <td class="tix-left">
+                            <label for="invoice-email">
+                                E-mail du destinataire<span class="tix-required-star">*</span>
+                            </label>
+                        </td>
+                        <td class="tix-right">
+                            <input type="text" name="invoice-email" id="invoice-email" value=""
+                                pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$" required="">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tix-left">
+                            <label for="invoice-name">
+                                Nom du destinataire ou de l’organisation<span class="tix-required-star">*</span>
+                            </label>
+                        </td>
+                        <td class="tix-right">
+                            <input type="text" name="invoice-name" id="invoice-name" value="" required="">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tix-left">
+                            <label for="invoice-address">
+                                Adresse postale du destinataire<span class="tix-required-star">*</span>
+                            </label>
+                        </td>
+                        <td class="tix-right">
+                            <textarea name="invoice-address" id="invoice-address" rows="2" required=""></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tix-left">
+                            <label for="invoice-vat-number">
+                                Numéro de TVA<span class="tix-required-star">*</span>
+                            </label>
+                        </td>
+                        <td class="tix-right">
+                            <input type="text" name="invoice-vat-number" id="invoice-vat-number" value="" required="">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <label for="camptix-fsp-attendee-info-tos-required">
+            <input type="checkbox" id="camptix-fsp-attendee-info-tos-required" name="camptix-fsp-attendee-info-tos-required" tabindex="-1" autocomplete="off">
+            Yes
+        </label>
+        <style type="text/css">
+            label[for="camptix-fsp-attendee-info-tos-required"] {
+                display: none;
+            }
+        </style>
+        <label for="camptix-fsp-attendee-info-dob-required">
+            <input type="text" id="camptix-fsp-attendee-info-dob-required" name="camptix-fsp-attendee-info-dob-required" value="1776845439" tabindex="-1" autocomplete="off">
+            Date
+        </label>
+        <style type="text/css">
+            label[for="camptix-fsp-attendee-info-dob-required"] {
+                display: none;
+            }
+        </style>
+
+        <table class="tix_tickets_table tix-attendee-form">
+            <tbody>
+                <tr class="tix-row-health-advisory">
+                    <td class="tix-required tix-left" colspan="2">
+                        <p>Nous vous invitons à nous aider à faire des WordCamps une expérience accueillante et sûre
+                            pour tous. Quand vous planifiez d’assister au WordCamp, nous vous recommandons de rester à
+                            la maison si vous êtes malade ou si vous avez récemment été en contact avec une personne
+                            malade.</p>
+                        <p>Si vous voyez qu’une autre personne porte un autocollant demandant aux gens de porter un
+                            masque près d’elle, veuillez porter un masque lorsque vous êtes à moins de 2 mètres (6
+                            pieds) d’elle ou gardez vos distances.</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="tix-submit">
+            <div class="tix-payment-method">
+                <input type="radio" name="tix_payment_method" id="tix-preferred-payment-option" style="display:none;" autocomplete="off" value="stripe" checked="checked">
+                <button type="button" aria-pressed="true" tabindex="0" class="tix-payment-tab tix-preferred-payment-option  tix-tab-selected">
+                    Payer avec Credit Card (Stripe) </button>
+                <button type="button" aria-pressed="false" class="tix_other_payment_options tix-payment-tab">Tous les moyens de paiement </button>
+            </div>
+            <div class="tix-payment-method-container tix-hidden " id="tix-payment-options-list">
+                <fieldset>
+                    <legend class="screen-reader-text">Moyens de paiement </legend>
+
+                    <div class="tix-alternate-payment-option">
+                        <input type="radio" name="tix_payment_method" id="tix-payment-method_paypal" value="paypal" autocomplete="off" required="">
+
+                        <label for="tix-payment-method_paypal">PayPal</label>
+                    </div>
+
+                    <div class="tix-alternate-payment-option">
+                        <input type="radio" name="tix_payment_method" id="tix-payment-method_stripe" value="stripe" autocomplete="off" required="">
+
+                        <label for="tix-payment-method_stripe">Credit Card (Stripe) </label>
+                    </div>
+                </fieldset>
+            </div>
+            <input class="tix-checkout-button" type="submit" value="Commander →">
+            <br class="tix-clear">
+        </div>
+    </form>
+</div>
