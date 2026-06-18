@@ -7,7 +7,7 @@
 a:not(.wp-element-button) {
     text-decoration-thickness: 0.1ch !important;
     text-decoration-color: color-mix(in oklch, currentColor 50%, transparent);
-    text-underline-offset: 0.325ch;
+    text-underline-offset: 0.125em;
 }
 
 a:not(.wp-element-button):is(:hover, :focus) {
