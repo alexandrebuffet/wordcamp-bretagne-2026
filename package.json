@@ -3,6 +3,7 @@
   "private": true,
   "scripts": {
     "build": "wp-scripts build",
+    "lint:css": "wp-scripts lint-style",
     "start": "wp-scripts start"
   },
   "devDependencies": {

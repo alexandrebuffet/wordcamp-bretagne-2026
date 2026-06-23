@@ -1,0 +1,10 @@
+.wp-block-jetpack-related-posts {
+	font-weight: 700;
+
+	&[data-layout="list"] {
+
+		.jp-related-posts-i2__post {
+			margin-bottom: 0;
+		}
+	}
+}

@@ -1,40 +1,47 @@
-// Design tokens for the remote stylesheet (Twenty Twenty-Five + WordCamp Bretagne 2026 editor palette).
-// Runtime values come from theme.json / Site Editor; fallbacks mirror the generated CSS for robust `var(..., fallback)`.
+// Design tokens for the remote stylesheet (Twenty Twenty-Five + WordCamp
+// Bretagne 2026 editor palette).
+// Runtime values come from theme.json / Site Editor; fallbacks mirror the
+// generated CSS for robust `var(..., fallback)`.
 
-@use 'sass:map';
-@use 'sass:string';
+@use "sass:map";
+@use "sass:string";
 
-// Preset aspect ratios (slug → fallback). Keys match `--wp--preset--aspect-ratio--{key}`.
+// Preset aspect ratios (slug → fallback).
+// Keys match `--wp--preset--aspect-ratio--{key}`.
 $wp-preset-aspect-ratios: ();
 
 // Preset colors (slug → fallback hex). Keys match `--wp--preset--color--{key}`.
 $wp-preset-colors: (
-	'base': #ffffff,
-	'contrast': #111111,
-	'accent-1': #f4d55a,
-	'accent-2': #ec97d5,
-	'accent-3': #5573dd,
-	'accent-4': #4aaf67,
-	'accent-5': #cfcabe,
-	'custom-accent-6': #945f3c,
-	'custom-accent-7': #eccf96,
+	"base": #fff,
+	"contrast": #111,
+	"accent-1": #f4d55a,
+	"accent-2": #ec97d5,
+	"accent-3": #5573dd,
+	"accent-4": #4aaf67,
+	"accent-5": #cfcabe,
+	"custom-accent-6": #945f3c,
+	"custom-accent-7": #eccf96
 );
 
-// Preset font families (slug → fallback stack). Keys match `--wp--preset--font-family--{key}`.
+// Preset font families (slug → fallback stack).
+// Keys match `--wp--preset--font-family--{key}`.
 $wp-preset-font-families: (
-	'host-grotesk': '"Host Grotesk", sans-serif',
-	'unbounded': 'Unbounded, sans-serif',
+	"host-grotesk": '"Host Grotesk", sans-serif',
+	"unbounded": "Unbounded, sans-serif"
 );
 
-// Preset font sizes (slug → fallback). Keys match `--wp--preset--font-size--{key}`.
+// Preset font sizes (slug → fallback).
+// Keys match `--wp--preset--font-size--{key}`.
 $wp-preset-font-sizes: (
-	'custom-1': string.unquote('clamp(3rem, 3rem + ((1vw - 0.2rem) * 3.137), 5rem)'),
+	"custom-1": string.unquote("clamp(3rem, 3rem + ((1vw - 0.2rem) * 3.137), 5rem)")
 );
 
-// Preset spacing (slug → fallback). Keys match `--wp--preset--spacing--{key}`.
+// Preset spacing (slug → fallback).
+// Keys match `--wp--preset--spacing--{key}`.
 $wp-preset-spacing: ();
 
-// Preset border radius (slug → fallback). Keys match `--wp--preset--border-radius--{key}`.
+// Preset border radius (slug → fallback).
+// Keys match `--wp--preset--border-radius--{key}`.
 $wp-preset-border-radius: ();
 
 // Preset shadow (slug → fallback). Keys match `--wp--preset--shadow--{key}`.
@@ -42,53 +49,58 @@ $wp-preset-shadow: ();
 
 // Layout breakpoints used in media queries (`min-width` / `max-width`).
 $breakpoints: (
-	'sm': 480px,
-	'md': 600px,
-	'lg': 782px,
+	"sm": 480px,
+	"md": 600px,
+	"lg": 782px
 );
 
 // Camptix layout breakpoints (historical values from remote CSS).
 $camptix-tickets-breakpoint-max: 767px;
-$camptix-attendees-breakpoint-max: 768px;
 
-// Placeholder when an attendee has no Gravatar.
-$camptix-attendee-no-gravatar-url: '//europe.wordcamp.org/2026/files/2026/03/attendee-NO-gravatar-2.png';
-
-/// Builds `var(--wp--preset--{preset-type}--{token}[, fallback])` from a slug → fallback map.
+// Builds `var(--wp--preset--{preset-type}--{token}[, fallback])` from a slug
+// → fallback map.
 @function wp-preset-var($preset-type, $token, $fallback-map) {
+
 	@if map.has-key($fallback-map, $token) {
 		$fallback: map.get($fallback-map, $token);
 
-		@return string.unquote('var(--wp--preset--#{$preset-type}--#{$token}, #{$fallback})');
+		@return string.unquote("var(--wp--preset--#{$preset-type}--#{$token}, #{$fallback})");
 	}
 
-	@return string.unquote('var(--wp--preset--#{$preset-type}--#{$token})');
+	@return string.unquote("var(--wp--preset--#{$preset-type}--#{$token})");
 }
 
 @function wp-preset-aspect-ratio($token) {
-	@return wp-preset-var('aspect-ratio', $token, $wp-preset-aspect-ratios);
+
+	@return wp-preset-var("aspect-ratio", $token, $wp-preset-aspect-ratios);
 }
 
 @function wp-preset-color($token) {
-	@return wp-preset-var('color', $token, $wp-preset-colors);
+
+	@return wp-preset-var("color", $token, $wp-preset-colors);
 }
 
 @function wp-preset-font-family($token) {
-	@return wp-preset-var('font-family', $token, $wp-preset-font-families);
+
+	@return wp-preset-var("font-family", $token, $wp-preset-font-families);
 }
 
 @function wp-preset-font-size($token) {
-	@return wp-preset-var('font-size', $token, $wp-preset-font-sizes);
+
+	@return wp-preset-var("font-size", $token, $wp-preset-font-sizes);
 }
 
 @function wp-preset-spacing($token) {
-	@return wp-preset-var('spacing', $token, $wp-preset-spacing);
+
+	@return wp-preset-var("spacing", $token, $wp-preset-spacing);
 }
 
 @function wp-preset-border-radius($token) {
-	@return wp-preset-var('border-radius', $token, $wp-preset-border-radius);
+
+	@return wp-preset-var("border-radius", $token, $wp-preset-border-radius);
 }
 
 @function wp-preset-shadow($token) {
-	@return wp-preset-var('shadow', $token, $wp-preset-shadow);
+
+	@return wp-preset-var("shadow", $token, $wp-preset-shadow);
 }

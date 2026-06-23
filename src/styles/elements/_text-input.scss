@@ -1,34 +1,33 @@
 input[type="submit"],
 input[type="button"],
 input[type="reset"] {
- border: none;
- background-color: var(--wp--preset--color--contrast);
- color: var(--wp--preset--color--base);
- font-family: var(--wp--preset--font-family--unbounded);
- font-size: var(--wp--preset--font-size--medium);
- font-style: normal;
- font-weight: 500;
- line-height: inherit;
- border-radius: 999px;
- padding-top: 1rem;
-  padding-right: 2.25rem;
-  padding-bottom: 1rem;
-  padding-left: 2.25rem;
+	border: none;
+	background-color: var(--wp--preset--color--contrast);
+	color: var(--wp--preset--color--base);
+	font-family: var(--wp--preset--font-family--unbounded);
+	font-size: var(--wp--preset--font-size--medium);
+	font-style: normal;
+	font-weight: 500;
+	line-height: inherit;
+	border-radius: 999px;
+	padding-top: 1rem;
+	padding-right: 2.25rem;
+	padding-bottom: 1rem;
+	padding-left: 2.25rem;
 
-  &:hover {
-    background-color: color-mix(in srgb, var(--wp--preset--color--contrast) 85%, transparent);
-    color: var(--wp--preset--color--base);
-   }
-   
-   &:focus {
-    background-color: var(--wp--preset--color--contrast);
-    border-color: var(--wp--preset--color--contrast);
-    color: var(--wp--preset--color--base);
-   }
-   
-   &:active {
-    background-color: var(--wp--preset--color--contrast);
-    color: var(--wp--preset--color--base);
-   }
+	&:hover {
+		background-color: color-mix(in srgb, var(--wp--preset--color--contrast) 85%, transparent);
+		color: var(--wp--preset--color--base);
+	}
+
+	&:focus {
+		background-color: var(--wp--preset--color--contrast);
+		border-color: var(--wp--preset--color--contrast);
+		color: var(--wp--preset--color--base);
+	}
+
+	&:active {
+		background-color: var(--wp--preset--color--contrast);
+		color: var(--wp--preset--color--base);
+	}
 }
-

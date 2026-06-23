@@ -1,3 +1,7 @@
-.wp-element-button:focus, .wp-block-button__link:focus {
-    outline-color: var(--wp--preset--color--contrast);
-  }
+.wp-element-button,
+.wp-block-button__link {
+
+	&:focus {
+		outline-color: var(--wp--preset--color--contrast);
+	}
+}

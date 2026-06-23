@@ -1,7 +1,8 @@
-@use 'elements/button' as *;
-@use 'elements/heading' as *;
-@use 'elements/link' as *;
-@use 'elements/text-input' as *;
+@use "elements/button" as *;
+@use "elements/heading" as *;
+@use "elements/link" as *;
+@use "elements/text-input" as *;
 
-@use 'blocks/camptix' as *;
-@use 'blocks/list' as *;
+@use "blocks/camptix" as *;
+@use "blocks/core" as *;
+@use "blocks/jetpack" as *;

@@ -1,14 +1,13 @@
-//
 // This CSS will be included in WordCamp Bretagne 2026 every time
 // you will make a repository commit and reload remote CSS from the website
 // admin view (Appearance -> Remote CSS) or visiting
 // https://bretagne.wordcamp.org/2026/wp-admin/admin-ajax.php?action=wcrcss_webhook (UPDATE CSS HERE ONLY FOR PRODUCTION)
 // https://bretagne.wordcamp.org/2026/ CSS will be synched with this file
-//
-// Don't use post IDs as selectors because they can change between development environment and production.
-// Instead, use the slug; e.g. body.post-slug-call-for-volunteers, body.page-slug-accommodation or better,
-// create a class and use it on the element because we can reuse these classes.
-//
 
-@use 'styles/theme' as *;
-@use 'styles/utilities' as *;
+// Don't use post IDs as selectors because they can change between development
+// environment and production. Instead, use the slug; e.g.
+// body.post-slug-call-for-volunteers, body.page-slug-accommodation or better,
+// create a class and use it on the element because we can reuse these classes.
+
+@use "styles/theme" as *;
+@use "styles/utilities" as *;
