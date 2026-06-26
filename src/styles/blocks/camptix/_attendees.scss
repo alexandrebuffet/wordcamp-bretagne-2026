@@ -12,19 +12,19 @@
 }
 
 #tix-attendees .tix-attendee-list.tix-columns-3 {
-    grid-template-columns: repeat(auto-fill, minmax(max(min(8rem, 100%), (100% - (var(--wp--preset--spacing--50) * (3 - 1))) /3), 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(max(min(8rem, 100%), (100% - (var(--wp--preset--spacing--50) * (3 - 1))) / 3), 1fr));
 }
 
 #tix-attendees .tix-attendee-list.tix-columns-4 {
-    grid-template-columns: repeat(auto-fill, minmax(max(min(8rem, 100%), (100% - (var(--wp--preset--spacing--50) * (4 - 1))) /4), 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(max(min(8rem, 100%), (100% - (var(--wp--preset--spacing--50) * (4 - 1))) / 4), 1fr));
 }
 
 #tix-attendees .tix-attendee-list.tix-columns-5 {
-    grid-template-columns: repeat(auto-fill, minmax(max(min(8rem, 100%), (100% - (var(--wp--preset--spacing--50) * (5 - 1))) /5), 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(max(min(8rem, 100%), (100% - (var(--wp--preset--spacing--50) * (5 - 1))) / 5), 1fr));
 }
 
 #tix-attendees .tix-attendee-list.tix-columns-6 {
-    grid-template-columns: repeat(auto-fill, minmax(max(min(8rem, 100%), (100% - (var(--wp--preset--spacing--50) * (6 - 1))) /6), 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(max(min(8rem, 100%), (100% - (var(--wp--preset--spacing--50) * (6 - 1))) / 6), 1fr));
 }
 
 #tix-attendees .tix-attendee-list li {
@@ -45,7 +45,7 @@
     height: auto !important;
     width: clamp(60px, 10vw, 160px) !important;
     aspect-ratio: 1;
-    border-width: 2px solid currentColor;
+    border: 2px solid currentColor;
     object-fit: contain;
     box-shadow: var(--wp--preset--shadow--shadow-1);
 }
