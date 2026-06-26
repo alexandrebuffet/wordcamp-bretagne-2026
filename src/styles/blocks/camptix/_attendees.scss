@@ -43,9 +43,10 @@
     border-radius: 50%;
     flex-shrink: 0;
     height: auto !important;
-    width: clamp(60px, 10vw, 160px) !important;
+    width: clamp(60px, 10vw, 96px) !important;
     aspect-ratio: 1;
     border: 2px solid currentColor;
+    filter: grayscale(100%);
     object-fit: contain;
     box-shadow: var(--wp--preset--shadow--shadow-1);
 }
