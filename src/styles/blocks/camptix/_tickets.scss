@@ -517,6 +517,15 @@
 				font-weight: 700;
 			}
 		}
+
+		tbody th,
+		tbody td {
+			border-bottom: 2px solid color-mix(in oklch, #{wp-preset-color("contrast")} 12.5%, transparent);
+		}
+
+		tbody td:last-child {
+			border-bottom: none;
+		}
 	}
 
 	.tix-column-remaining::before {
@@ -603,12 +612,23 @@
 		box-sizing: border-box;
 	}
 
+	.tix-js .tix_tickets_table.tix-tickets-list .tix-row-coupon td {
+		border-top: 2px solid #{wp-preset-color("contrast")};
+		padding-top: #{wp-preset-spacing("30")};
+		text-align: left !important;
+	}
+
 	.tix-js #tix-coupon-container[style*="block"] {
 		flex-direction: column;
 		align-items: stretch;
 
-		#tix-coupon-input,
+		#tix-coupon-input {
+			flex: none;
+			width: 100%;
+		}
+
 		input[type="submit"] {
+			flex: none;
 			width: 100%;
 		}
 	}
