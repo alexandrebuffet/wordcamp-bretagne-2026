@@ -396,8 +396,8 @@
 		display: flex !important;
 		flex-wrap: wrap;
 		align-items: center;
-		gap: #{wp-preset-spacing("30")};
-		margin-top: #{wp-preset-spacing("20")};
+		gap: #{wp-preset-spacing("20")};
+		margin-top: 0;
 
 		#tix-coupon-input {
 			flex: 1 1 12rem;
@@ -614,7 +614,6 @@
 
 	.tix-js .tix_tickets_table.tix-tickets-list .tix-row-coupon td {
 		border-top: 2px solid #{wp-preset-color("contrast")};
-		padding-top: #{wp-preset-spacing("30")};
 		text-align: left !important;
 	}
 
