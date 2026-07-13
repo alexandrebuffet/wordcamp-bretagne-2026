@@ -238,7 +238,8 @@
 //     font-size: var(--wp--preset--font-size--small);
 // }
 
-.tix_tickets_table {
+.tix_tickets_table,
+.tix-ticket-form {
 
 	input[type="text"],
 	input[type="url"],
@@ -259,7 +260,8 @@
 .tix-js {
 	max-width: var(--wp--style--global--content-wide) !important;
 
-	.tix_tickets_table {
+	.tix_tickets_table,
+	.tix-ticket-form {
 		border-collapse: collapse;
 		width: 100%;
 		border: 2px solid #{wp-preset-color("contrast")};
@@ -381,12 +383,37 @@
 		&.tix--form .tix-row-health-advisory .tix-left::after {
 			content: none;
 		}
+
+		// Purchased tickets summary (access token page).
+		&.tix-ticket-form tbody td:first-child,
+		&.tix-ticket-form tbody td:last-child {
+			text-align: left;
+		}
 	}
 
-	#tix-coupon-input {
-		font-size: 1em;
-		padding: #{wp-preset-spacing("20")} #{wp-preset-spacing("30")};
-		border: 2px solid #{wp-preset-color("contrast")};
+	// Coupon code row: input and button on one line, stack on mobile.
+	#tix-coupon-container[style*="block"] {
+		display: flex !important;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: #{wp-preset-spacing("30")};
+		margin-top: #{wp-preset-spacing("20")};
+
+		#tix-coupon-input {
+			flex: 1 1 12rem;
+			min-width: 0;
+			width: auto;
+			font-size: 1em;
+			padding: #{wp-preset-spacing("20")} #{wp-preset-spacing("30")};
+			border: 2px solid #{wp-preset-color("contrast")};
+			border-radius: 32px;
+			box-sizing: border-box;
+		}
+
+		input[type="submit"] {
+			flex: 0 0 auto;
+			white-space: nowrap;
+		}
 	}
 
 	.tix-submit {
@@ -457,7 +484,8 @@
 		padding-bottom: 28px !important;
 	}
 
-	.tix-js .tix_tickets_table {
+	.tix-js .tix_tickets_table,
+	.tix-js .tix-ticket-form {
 
 		table,
 		thead,
@@ -506,7 +534,8 @@
 	}
 
 	.tix-js .tix_tickets_table tbody .tix-ticket-title,
-	.tix-js .tix_tickets_table tbody .tix-column-description {
+	.tix-js .tix_tickets_table tbody .tix-column-description,
+	.tix-js .tix-ticket-form tbody td:first-child {
 		font-weight: 700;
 		display: block;
 		width: auto;
@@ -515,7 +544,8 @@
 		padding: #{wp-preset-spacing("20")} #{wp-preset-spacing("30")};
 	}
 
-	.tix-js .tix_tickets_table tbody .tix-column-title {
+	.tix-js .tix_tickets_table tbody .tix-column-title,
+	.tix-js .tix-ticket-form tbody td:first-child strong {
 		font-weight: 700;
 		font-family: #{wp-preset-font-family("unbounded")};
 	}
@@ -528,6 +558,13 @@
 		background: #{wp-preset-color("contrast")};
 		color: #{wp-preset-color("base")};
 		padding: 0;
+	}
+
+	.tix-js .tix-ticket-form tbody td:not(:first-child) {
+		background: #{wp-preset-color("base")};
+		color: #{wp-preset-color("contrast")};
+		padding: #{wp-preset-spacing("20")} #{wp-preset-spacing("30")};
+		text-align: left;
 	}
 
 	.tix-js .tix_tickets_table .tix-ticket-excerpt {
@@ -564,5 +601,15 @@
 		text-align: left !important;
 		width: 100%;
 		box-sizing: border-box;
+	}
+
+	.tix-js #tix-coupon-container[style*="block"] {
+		flex-direction: column;
+		align-items: stretch;
+
+		#tix-coupon-input,
+		input[type="submit"] {
+			width: 100%;
+		}
 	}
 }
