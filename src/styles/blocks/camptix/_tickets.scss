@@ -385,8 +385,7 @@
 		}
 
 		// Purchased tickets summary (access token page).
-		&.tix-ticket-form tbody td:first-child,
-		&.tix-ticket-form tbody td:last-child {
+		&.tix-ticket-form tbody td {
 			text-align: left;
 		}
 	}
