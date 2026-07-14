@@ -32,4 +32,10 @@
             padding-block: wp-preset-spacing("20");
         }
     }
+
+    @include breakpoint-max("lg") {
+        .wp-block-navigation__container {
+            gap: 1rem;
+        }
+    }
 }
