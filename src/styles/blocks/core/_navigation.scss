@@ -8,8 +8,11 @@
                 overflow: hidden;
                 box-shadow: wp-preset-shadow("shadow-1");
                 border: 2px solid wp-preset-color("contrast");
-                min-width: 280px;
                 padding-block: 1.5rem;
+            }
+
+            .wp-block-navigation-submenu__toggle[aria-expanded="true"] ~ .wp-block-navigation__submenu-container {
+                min-width: 280px;
             }
 
             .wp-block-navigation-submenu {
