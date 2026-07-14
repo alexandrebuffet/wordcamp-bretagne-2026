@@ -8,7 +8,7 @@
                 overflow: hidden;
                 box-shadow: wp-preset-shadow("shadow-1");
                 border: 2px solid wp-preset-color("contrast");
-                width: 280px;
+                min-width: 280px;
                 padding-block: 1.5rem;
             }
 
