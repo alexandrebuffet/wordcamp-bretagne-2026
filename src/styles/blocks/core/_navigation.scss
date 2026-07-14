@@ -1,0 +1,20 @@
+@use "../../abstracts" as *;
+
+.wp-block-navigation {
+    @include breakpoint-min(lg) {
+        .wp-block-navigation__submenu-container {
+            border-radius: 2rem;
+            overflow: hidden;
+            box-shadow: wp-preset-shadow("shadow-1");
+            border: 2px solid wp-preset-color("contrast");
+            width: 280px;
+            padding-block: 1.5rem;
+        }
+
+        .wp-block-navigation-submenu {
+            .wp-block-navigation-item:not(:last-child) {
+                margin-bottom: 0;
+            }
+        }
+    }
+}
