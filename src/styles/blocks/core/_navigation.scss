@@ -1,14 +1,14 @@
 @use "../../abstracts" as *;
 
 .wp-block-navigation {
-    @include breakpoint-min(lg) {
+    @include breakpoint-min("md") {
         .has-child {
             .wp-block-navigation__submenu-container {
                 border-radius: 2rem;
                 overflow: hidden;
                 box-shadow: wp-preset-shadow("shadow-1");
                 border: 2px solid wp-preset-color("contrast");
-                padding-block: 1.5rem;
+                padding-block: 1rem;
             }
 
             .wp-block-navigation-submenu__toggle[aria-expanded="true"] ~ .wp-block-navigation__submenu-container {
