@@ -9,7 +9,7 @@
                 box-shadow: wp-preset-shadow("shadow-1");
                 border: 2px solid wp-preset-color("contrast");
                 padding-block: 1rem;
-                top: calc(100% + wp-preset-spacing("20"));
+                margin-top: wp-preset-spacing("20");
             }
 
             .wp-block-navigation-item {
