@@ -2,10 +2,6 @@
 
 .wp-block-navigation {
     @include breakpoint-min("md") {
-        .wp-block-navigation__container > .wp-block-navigation-item {
-            padding-block: wp-preset-spacing("20");
-        }
-
         .wp-block-navigation-item {
             background-color: initial;
         }
@@ -28,6 +24,12 @@
                     margin-bottom: 0;
                 }
             }
+        }
+    }
+
+    @include breakpoint-min("lg") {
+        .wp-block-navigation__container > .wp-block-navigation-item {
+            padding-block: wp-preset-spacing("20");
         }
     }
 }
