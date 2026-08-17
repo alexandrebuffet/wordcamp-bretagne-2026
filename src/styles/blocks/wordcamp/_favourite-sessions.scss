@@ -18,6 +18,10 @@
 $favourite-panel-width: 22rem;
 $favourite-panel-inset: 1.5rem;
 $favourite-outline-width: 2px;
+$favourite-pill-radius: 999px;
+
+// The site's own text fields sit on a thinner line than the panel's frame.
+$favourite-field-border-width: 1px;
 
 // Floating trigger. `position: fixed` blockifies it, so the inline
 // `display: inline` the plugin writes does not stop the padding from working.
@@ -25,7 +29,7 @@ a.show-email-form {
 	right: $favourite-panel-inset;
 	bottom: $favourite-panel-inset;
 	border: none;
-	border-radius: 999px;
+	border-radius: $favourite-pill-radius;
 	padding: 0.75rem 1.25rem;
 	background-color: wp-preset-color("contrast");
 	font-family: wp-preset-font-family("unbounded");
@@ -102,11 +106,15 @@ a.show-email-form {
 	margin: 0;
 }
 
+// The plugin stretches the field with `width: 100%` and nothing sets
+// `box-sizing`, so its padding and border are added on top of the full width
+// and push it out of the panel.
 .email-form #fav-sessions-email-address {
+	box-sizing: border-box;
 	margin-block: 0.5rem;
-	border: $favourite-outline-width solid wp-preset-color("contrast");
-	border-radius: 0;
-	padding: 0.5rem 0.75rem;
+	border: $favourite-field-border-width solid wp-preset-color("contrast");
+	border-radius: $favourite-pill-radius;
+	padding: 0.75rem 1.25rem;
 	background-color: wp-preset-color("base");
 	color: wp-preset-color("contrast");
 	font-size: wp-preset-font-size("small");
@@ -117,7 +125,7 @@ a.show-email-form {
 // scaled down to sit inside a panel barely wider than one site button.
 .email-form :is(input[type="submit"], #fav-session-print) {
 	border: none;
-	border-radius: 999px;
+	border-radius: $favourite-pill-radius;
 	padding: 0.75rem 1.5rem;
 	width: 100%;
 	background-color: wp-preset-color("contrast");
