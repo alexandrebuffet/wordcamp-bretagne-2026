@@ -59,6 +59,13 @@ a.show-email-form {
 	background-color: wp-preset-color("base");
 	color: wp-preset-color("contrast");
 	font-size: wp-preset-font-size("small");
+
+	// Folded away, the panel keeps `max-height: 0` and stays in the page, so
+	// its two borders stack into a bar hanging in the corner. The plugin
+	// transitions every property, so the border folds along with the height.
+	&.fav-session-email-form-hide {
+		border-width: 0;
+	}
 }
 
 // Tab strip. The plugin lays it out as a table, so the tabs are table cells
