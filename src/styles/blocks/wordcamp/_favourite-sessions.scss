@@ -1,0 +1,136 @@
+@use "../../abstracts" as *;
+
+// Share panel for favourited sessions, from the `wc-post-types` plugin: a
+// floating trigger, and a tabbed panel to e-mail, link or print the picks.
+// The star on each session lives with the schedule, in `_schedule.scss`.
+
+// Two constraints from the plugin, both worth knowing before editing.
+
+// It toggles the trigger and each tab pane with jQuery, which writes `display`
+// as an inline style. Declaring `display` here would need `!important` to take
+// effect, and that would pin them open — so `display` is left alone.
+
+// It reaches `#content a.show-email-form:hover` for the trigger colour.
+// `#content` does not exist in a block theme, but the neighbouring
+// `.entry-content a.show-email-form:hover` does, so the colour rules carry one
+// extra ancestor class to outweigh it.
+
+$favourite-panel-width: 22rem;
+$favourite-panel-inset: 1.5rem;
+$favourite-outline-width: 2px;
+
+// Floating trigger. `position: fixed` blockifies it, so the inline
+// `display: inline` the plugin writes does not stop the padding from working.
+a.show-email-form {
+	right: $favourite-panel-inset;
+	bottom: $favourite-panel-inset;
+	border: none;
+	border-radius: 999px;
+	padding: 0.75rem 1.25rem;
+	background-color: wp-preset-color("contrast");
+	font-family: wp-preset-font-family("unbounded");
+	font-size: wp-preset-font-size("small");
+	line-height: 1;
+
+	.dashicons {
+		width: auto;
+		font-size: 1.125rem;
+		line-height: 1;
+		vertical-align: middle;
+	}
+}
+
+.wp-site-blocks .entry-content a.show-email-form {
+	color: wp-preset-color("base");
+
+	&:is(:hover, :focus) {
+		background-color: color-mix(in srgb, var(--wp--preset--color--contrast) 85%, transparent);
+		color: wp-preset-color("base");
+	}
+}
+
+.email-form {
+	right: $favourite-panel-inset;
+	bottom: calc(#{$favourite-panel-inset} * 2 + 3rem);
+	overflow: hidden;
+	border: $favourite-outline-width solid wp-preset-color("contrast");
+	border-radius: 0;
+	width: min(#{$favourite-panel-width}, calc(100vw - #{$favourite-panel-inset} * 2));
+	background-color: wp-preset-color("base");
+	color: wp-preset-color("contrast");
+	font-size: wp-preset-font-size("small");
+}
+
+// Tab strip. The plugin lays it out as a table, so the tabs are table cells
+// and stretch to equal widths on their own.
+.email-form .fav-session-share-tab {
+	border: none;
+	border-bottom: $favourite-outline-width solid wp-preset-color("contrast");
+	background-color: wp-preset-color("base");
+
+	div {
+		padding: 0.75rem 0.5rem;
+		font-family: wp-preset-font-family("unbounded");
+		font-size: wp-preset-font-size("small");
+		line-height: 1;
+	}
+
+	div:hover {
+		background-color: wp-preset-color("accent-5");
+	}
+
+	div.active {
+		background-color: wp-preset-color("contrast");
+		color: wp-preset-color("base");
+	}
+}
+
+.email-form .fav-session-share-tabcontent {
+	border: none;
+	padding: wp-preset-spacing("30");
+	background-color: wp-preset-color("base");
+}
+
+.email-form #fav-session-email-form {
+	margin: 0;
+}
+
+.email-form #fav-sessions-email-address {
+	margin-block: 0.5rem;
+	border: $favourite-outline-width solid wp-preset-color("contrast");
+	border-radius: 0;
+	padding: 0.5rem 0.75rem;
+	background-color: wp-preset-color("base");
+	color: wp-preset-color("contrast");
+	font-size: wp-preset-font-size("small");
+}
+
+// The submit input already picks up the site button from `elements/text-input`;
+// the print trigger is a `<button>`, so it needs the same treatment. Both are
+// scaled down to sit inside a panel barely wider than one site button.
+.email-form :is(input[type="submit"], #fav-session-print) {
+	border: none;
+	border-radius: 999px;
+	padding: 0.75rem 1.5rem;
+	width: 100%;
+	background-color: wp-preset-color("contrast");
+	color: wp-preset-color("base");
+	font-family: wp-preset-font-family("unbounded");
+	font-size: wp-preset-font-size("small");
+	font-weight: 400;
+	line-height: 1;
+	cursor: pointer;
+
+	&:is(:hover, :focus) {
+		background-color: color-mix(in srgb, var(--wp--preset--color--contrast) 85%, transparent);
+		color: wp-preset-color("base");
+	}
+}
+
+// The shareable link is a raw query string, long enough to blow the panel out
+// without a break opportunity.
+.email-form #fav-sessions-link {
+	display: inline-block;
+	margin-block-start: 0.5rem;
+	word-break: break-all;
+}
