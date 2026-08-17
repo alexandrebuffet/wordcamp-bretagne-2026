@@ -1,0 +1,110 @@
+<!--
+    Rendered markup of the `wordcamp/schedule` block (WordCamp mu-plugins).
+    Captured from https://bretagne.wordcamp.org/2024/programme/ — the 2026 page
+    does not exist yet. The block renders client-side, so this markup is absent
+    from the page source; it was read from the live DOM.
+
+    Trimmed to one representative sample per state:
+    - the three column headers (time + one per track),
+    - a time slot with a session spanning every track (opening / break),
+    - a time slot with one session per track, including the favourite button,
+    - the same session in its favourited state (`.wcb-favourite-session`),
+      which the wc-post-types plugin toggles client-side.
+
+    Track and slug classes (`has-track-*`, `has-slug-*`, `has-category-*`) are
+    generated from the 2024 taxonomy terms. The 2026 tracks are not published
+    yet — see `$schedule-tracks` in styles/blocks/wordcamp/_schedule.scss.
+-->
+<div class="wp-block-wordcamp-schedule alignwide">
+    <div class="wordcamp-schedule is-style-default">
+        <!--
+            The block prints the grid template inline, keyed on the day id.
+            Column lines are named `wordcamp-schedule-track-{term_id}`, row lines
+            `time-{DDHHMM}`, and the header row line is `tracks`. Truncated here.
+        -->
+        <style>
+            @supports (display: grid) {
+                @media screen and (min-width: 550px) {
+                    #wordcamp-schedule__day-2024-09-27-tracks-25-26 {
+                        grid-template-columns:
+                            [times] auto
+                            [wordcamp-schedule-track-25-start] 1fr
+                            [wordcamp-schedule-track-25-end wordcamp-schedule-track-26-start] 1fr
+                            [wordcamp-schedule-track-26-end];
+                        grid-template-rows:
+                            [tracks] auto
+                            [time-270800] auto
+                            [time-270900] auto
+                            [time-270915] auto
+                            [time-270950] auto;
+                    }
+                }
+            }
+        </style>
+
+        <h2 class="wordcamp-schedule__date">27 septembre 2024</h2>
+
+        <section id="wordcamp-schedule__day-2024-09-27-tracks-25-26" class="wordcamp-schedule__day">
+            <span class="wordcamp-schedule__column-header is-column-time" aria-hidden="true" style="grid-column: times;">Time</span>
+            <span class="wordcamp-schedule__column-header is-column-track-grand-public" aria-hidden="true" style="grid-column: wordcamp-schedule-track-25;">Salle Grand Public</span>
+            <span class="wordcamp-schedule__column-header is-column-track-technique" aria-hidden="true" style="grid-column: wordcamp-schedule-track-26;">Salle Technique</span>
+
+            <h3 class="wordcamp-schedule__time-slot-header has-sessions" style="grid-row: time-270800 / time-270900;">08&nbsp;h&nbsp;00 CEST</h3>
+
+            <div id="wordcamp-schedule__session-2719" data-session-id="2719" class="wordcamp-schedule__session has-slug-ouverture-des-portes is-type-custom is-spanning-some-tracks is-spanning-all-tracks has-track-grand-public has-track-technique" style="grid-area: time-270800 / wordcamp-schedule-track-25 / time-270900 / wordcamp-schedule-track-26;">
+                <h4 class="wordcamp-schedule__session-title">Ouverture des portes et petit déjeuner</h4>
+                <p>08&nbsp;h&nbsp;00 - 09&nbsp;h&nbsp;00</p>
+                <dl class="wordcamp-schedule__session-tracks">
+                    <dt class="screen-reader-text">Tracks:</dt>
+                    <dd>Salle Grand Public</dd>
+                    <dd>Salle Technique</dd>
+                </dl>
+            </div>
+
+            <h3 class="wordcamp-schedule__time-slot-header has-sessions" style="grid-row: time-270915 / time-270950;">09&nbsp;h&nbsp;15 CEST</h3>
+
+            <div id="wordcamp-schedule__session-3581" data-session-id="3581" class="wordcamp-schedule__session has-slug-dites-non-au-green-washing-hebergez-reellement-ecoresponsable is-type-session has-track-grand-public has-category-ecologie has-category-hebergement has-speaker-pierre-lannoy" style="grid-area: time-270915 / wordcamp-schedule-track-25 / time-270950;">
+                <h4 class="wordcamp-schedule__session-title">
+                    <a href="https://bretagne.wordcamp.org/2024/session/dites-non-au-green-washing-hebergez-reellement-ecoresponsable/" target="_self" rel="noopener noreferrer">Dites non au green washing, hébergez réellement écoresponsable !</a>
+                    <div class="wcb-session-favourite-icon">
+                        <a href="#" role="button" class="fav-session-button" aria-pressed="false">
+                            <span class="screen-reader-text">Favorite session: Dites non au green washing, hébergez réellement écoresponsable !</span>
+                            <span class="dashicon dashicons dashicons-star-filled" style="font-size: 16px; width: 16px; height: 16px;"></span>
+                        </a>
+                    </div>
+                </h4>
+                <p>09&nbsp;h&nbsp;15 - 09&nbsp;h&nbsp;50</p>
+                <dl class="wordcamp-schedule__session-speakers">
+                    <dt class="screen-reader-text">Speakers:</dt>
+                    <dd><a href="https://bretagne.wordcamp.org/2024/speaker/pierre-lannoy/" target="_self" rel="noopener noreferrer">Pierre Lannoy</a></dd>
+                </dl>
+                <dl class="wordcamp-schedule__session-tracks">
+                    <dt class="screen-reader-text">Tracks:</dt>
+                    <dd>Salle Grand Public</dd>
+                </dl>
+            </div>
+
+            <!-- Same session once favourited: the plugin adds `.wcb-favourite-session` and flips `aria-pressed`. -->
+            <div id="wordcamp-schedule__session-3580" data-session-id="3580" class="wordcamp-schedule__session wcb-favourite-session has-slug-tour-dhorizon-de-lapi-interactivity is-type-session has-track-technique has-category-api has-category-nouveaute has-speaker-benjamin-gosset" style="grid-area: time-270915 / wordcamp-schedule-track-26 / time-270950;">
+                <h4 class="wordcamp-schedule__session-title">
+                    <a href="https://bretagne.wordcamp.org/2024/session/tour-dhorizon-de-lapi-interactivity/" target="_self" rel="noopener noreferrer">Tour d’horizon de l’API Interactivity</a>
+                    <div class="wcb-session-favourite-icon">
+                        <a href="#" role="button" class="fav-session-button" aria-pressed="true">
+                            <span class="screen-reader-text">Favorite session: Tour d’horizon de l’API Interactivity</span>
+                            <span class="dashicon dashicons dashicons-star-filled" style="font-size: 16px; width: 16px; height: 16px;"></span>
+                        </a>
+                    </div>
+                </h4>
+                <p>09&nbsp;h&nbsp;15 - 09&nbsp;h&nbsp;50</p>
+                <dl class="wordcamp-schedule__session-speakers">
+                    <dt class="screen-reader-text">Speakers:</dt>
+                    <dd><a href="https://bretagne.wordcamp.org/2024/speaker/benjamin-gosset/" target="_self" rel="noopener noreferrer">Benjamin Gosset</a></dd>
+                </dl>
+                <dl class="wordcamp-schedule__session-tracks">
+                    <dt class="screen-reader-text">Tracks:</dt>
+                    <dd>Salle Technique</dd>
+                </dl>
+            </div>
+        </section>
+    </div>
+</div>

@@ -1,0 +1,222 @@
+@use "../../abstracts" as *;
+
+// `wordcamp/schedule` block, shipped by the WordCamp mu-plugins.
+
+// The block renders client-side, so the markup is absent from the page source;
+// see `samples/wordcamp-schedule.html` for a capture of the real DOM.
+
+// Two things about the block's own stylesheet drive the structure below.
+// First, it switches from a stacked list to a CSS grid at its own 550px
+// breakpoint, unrelated to `$breakpoints`: column headers only exist in grid
+// mode, the per-session track list only in stacked mode. Second, its grid
+// rules are prefixed with `body:not(.block-editor-page)
+// .wordcamp-schedule:not(.is-style-single-column-layout)`, so overriding them
+// needs a selector of at least the same weight — that prefix is written once,
+// as a nesting root, in the grid section.
+
+// The block's own layout breakpoint (historical value from its stylesheet).
+$schedule-grid-breakpoint-min: 550px;
+
+$schedule-day-radius: 10px;
+$schedule-outline-width: 2px;
+$schedule-pill-radius: 4px;
+$schedule-favourite-icon-size: 24px;
+$schedule-favourite-outline-width: 5px;
+
+// Star glyphs, masked rather than drawn, so the colour stays on theme tokens.
+// stylelint-disable @stylistic/max-line-length -- a data URI cannot be wrapped.
+$schedule-star-outline: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z'/%3E%3C/svg%3E");
+$schedule-star-filled: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z'/%3E%3C/svg%3E");
+// stylelint-enable @stylistic/max-line-length
+
+// Accent per track, keyed on the track slug. The block emits
+// `.is-column-track-{slug}` on column headers and `.has-track-{slug}` on
+// sessions, both derived from the track term slug.
+
+// The 2026 tracks are not published yet: add one entry per track and both the
+// column header and the track pill below pick the colour up.
+$schedule-tracks: (
+	// "grand-public": wp-preset-color("accent-2"),
+	// "technique": wp-preset-color("accent-3"),
+);
+
+// Stacked layout — also what the `single-column-layout` block style renders at
+// every width.
+.wordcamp-schedule {
+
+	.wordcamp-schedule__date {
+		font-size: wp-preset-font-size("large");
+	}
+
+	.wordcamp-schedule__day {
+		overflow: hidden;
+		border-radius: $schedule-day-radius;
+		background-color: wp-preset-color("accent-5");
+		box-shadow: 0 0 0 $schedule-outline-width wp-preset-color("contrast");
+	}
+
+	.wordcamp-schedule__column-header {
+		font-family: wp-preset-font-family("unbounded");
+		font-size: 1rem;
+	}
+
+	.wordcamp-schedule__time-slot-header {
+		margin: 0;
+		border: none;
+		padding: wp-preset-spacing("20");
+		background-color: wp-preset-color("contrast");
+		color: wp-preset-color("base");
+		font-size: wp-preset-font-size("medium");
+	}
+
+	.wordcamp-schedule__session {
+		border: none;
+		padding: wp-preset-spacing("40");
+		background-color: wp-preset-color("base");
+		color: wp-preset-color("contrast");
+
+		> :last-child {
+			margin-block-end: 0;
+		}
+
+		.wordcamp-schedule__session-title {
+			line-height: 1.2;
+			font-size: get-clamp(1.1rem, 1.5rem, 20rem, 72.5rem);
+		}
+
+		.wordcamp-schedule__session-speakers {
+			font-family: wp-preset-font-family("unbounded");
+			font-weight: 600;
+		}
+
+		.wordcamp-schedule__session-tracks {
+			display: flex;
+			flex-wrap: wrap;
+			align-items: center;
+			gap: 0.25rem;
+
+			dd {
+				display: inline-block;
+				border-radius: $schedule-pill-radius;
+				padding: 0.25rem 0.5rem;
+				background-color: wp-preset-color("accent-5");
+				color: wp-preset-color("contrast");
+				font-family: wp-preset-font-family("unbounded");
+				font-size: 0.75rem;
+				letter-spacing: 0.05em;
+
+				// The block joins the pills with ", ", replaced here by the gap.
+				&::after {
+					content: none;
+				}
+			}
+		}
+
+		&:is(.is-spanning-some-tracks, .is-spanning-all-tracks) {
+			text-align: center;
+		}
+
+		// The block lays the title out as a flex row: title, favourite button.
+		&.is-spanning-all-tracks .wordcamp-schedule__session-title {
+			justify-content: center;
+		}
+
+		// A session spanning every track lists every track, so the pills say
+		// nothing the layout doesn't already say.
+		&.is-spanning-all-tracks .wordcamp-schedule__session-tracks {
+			display: none;
+		}
+	}
+
+	// Track pills only render in the stacked layout; the grid hides them and
+	// colours the column headers instead.
+	@each $slug, $color in $schedule-tracks {
+
+		.wordcamp-schedule__session.has-track-#{$slug} .wordcamp-schedule__session-tracks dd {
+			background-color: $color;
+		}
+	}
+}
+
+// Grid layout. `@supports` mirrors the block, which keeps the stacked layout —
+// and therefore the stacked colours — when grid is unavailable.
+@supports (display: grid) {
+
+	@include media-min($schedule-grid-breakpoint-min) {
+
+		body:not(.block-editor-page) .wordcamp-schedule:not(.is-style-single-column-layout) {
+
+			// Gutters wide enough for two cell outlines to meet and read as a
+			// single grid line.
+			.wordcamp-schedule__day {
+				gap: $schedule-outline-width;
+			}
+
+			.wordcamp-schedule__column-header,
+			.wordcamp-schedule__time-slot-header,
+			.wordcamp-schedule__session {
+				box-shadow: 0 0 0 $schedule-outline-width wp-preset-color("contrast");
+			}
+
+			.wordcamp-schedule__column-header {
+				margin: 0;
+				padding: wp-preset-spacing("20");
+				background-color: wp-preset-color("base");
+			}
+
+			// The time column reads as a gutter here rather than as a header
+			// band, so the stacked inversion is dropped.
+			.wordcamp-schedule__time-slot-header {
+				padding: wp-preset-spacing("20");
+				background-color: wp-preset-color("base");
+				color: wp-preset-color("contrast");
+			}
+
+			.wordcamp-schedule__session {
+				padding: wp-preset-spacing("40");
+			}
+
+			@each $slug, $color in $schedule-tracks {
+
+				.wordcamp-schedule__column-header.is-column-track-#{$slug} {
+					background-color: $color;
+				}
+			}
+		}
+	}
+}
+
+// Favourite sessions, from the `wc-post-types` plugin. It renders a dashicon
+// inside the button; masking a star over it keeps the colour on theme tokens
+// and lets the icon preview the action on hover.
+.wordcamp-schedule .wcb-session-favourite-icon {
+
+	.dashicon {
+		display: none;
+	}
+
+	a {
+		display: block;
+		width: $schedule-favourite-icon-size;
+		height: $schedule-favourite-icon-size;
+		background-color: wp-preset-color("contrast");
+		mask-image: $schedule-star-outline;
+		mask-position: center;
+		mask-repeat: no-repeat;
+		mask-size: contain;
+	}
+
+	a:is(:hover, :focus) {
+		mask-image: $schedule-star-filled;
+	}
+}
+
+.wordcamp-schedule .wordcamp-schedule__session.wcb-favourite-session {
+	outline: $schedule-favourite-outline-width solid wp-preset-color("accent-1");
+	outline-offset: -$schedule-favourite-outline-width;
+
+	.wcb-session-favourite-icon a {
+		background-color: wp-preset-color("accent-1");
+		mask-image: $schedule-star-filled;
+	}
+}
