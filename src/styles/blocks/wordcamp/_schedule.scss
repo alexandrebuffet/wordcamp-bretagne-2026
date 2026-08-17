@@ -187,11 +187,19 @@ $schedule-tracks: (
 			// Gutters wide enough for two cell outlines to meet and read as a
 			// single grid line.
 
-			// Each outer cell contributes its own outline, so the four sides
-			// are already drawn: the day's outline would sit on top of them
-			// and double the line along every edge.
+			// Each outer cell draws its own outline, so the day only has to
+			// close the shape where a slot holds no session and nothing else
+			// bounds it. `overflow` trims those outlines back to the day's
+			// edge and the border draws the single line around them.
+
+			// Not along the bottom: the block ends the grid with a row of zero
+			// height, so the gutter above it already carries the last row's
+			// own outline, and a border under that reads as a double line.
 			.wordcamp-schedule__day {
+				overflow: hidden;
 				gap: $schedule-outline-width;
+				border: $schedule-outline-width solid wp-preset-color("contrast");
+				border-block-end-width: 0;
 				box-shadow: none;
 			}
 
