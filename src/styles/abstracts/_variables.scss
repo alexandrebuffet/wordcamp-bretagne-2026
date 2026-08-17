@@ -33,7 +33,7 @@ $wp-preset-font-families: (
 // Preset font sizes (slug → fallback).
 // Keys match `--wp--preset--font-size--{key}`.
 $wp-preset-font-sizes: (
-	"custom-1": string.unquote("clamp(3rem, 3rem + ((1vw - 0.2rem) * 3.137), 5rem)")
+	"custom-1": string.unquote("clamp(2.5rem, 2.5rem + ((1vw - 0.2rem) * 3.922), 5rem)")
 );
 
 // Preset spacing (slug → fallback).
