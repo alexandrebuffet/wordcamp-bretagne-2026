@@ -17,21 +17,26 @@
 // The block's own layout breakpoint (historical value from its stylesheet).
 $schedule-grid-breakpoint-min: 550px;
 
-$schedule-day-radius: 10px;
 $schedule-outline-width: 2px;
 $schedule-pill-radius: 4px;
 $schedule-time-icon-size: 1.25rem;
-$schedule-favourite-icon-size: 24px;
+$schedule-favourite-icon-size: 1.5rem;
 $schedule-favourite-outline-width: 5px;
 
-// Glyphs, masked rather than drawn, so the colour stays on theme tokens.
-// Traced from `@wordpress/icons`, so they match the rest of the WordPress UI.
-// The empty star relies on `fill-rule`: its second subpath hollows the first.
-// stylelint-disable @stylistic/max-line-length -- a data URI cannot be wrapped.
-$schedule-clock: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 3c-5 0-9 4-9 9s4 9 9 9 9-4 9-9-4-9-9-9zm0 16.5c-4.1 0-7.5-3.4-7.5-7.5S7.9 4.5 12 4.5s7.5 3.4 7.5 7.5-3.4 7.5-7.5 7.5zM12 7l-1 5c0 .3.2.6.4.8l4.2 2.8-2.7-4.1L12 7z'/%3E%3C/svg%3E");
-$schedule-star-outline: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill-rule='evenodd' d='M9.706 8.646a.25.25 0 01-.188.137l-4.626.672a.25.25 0 00-.139.427l3.348 3.262a.25.25 0 01.072.222l-.79 4.607a.25.25 0 00.362.264l4.138-2.176a.25.25 0 01.233 0l4.137 2.175a.25.25 0 00.363-.263l-.79-4.607a.25.25 0 01.072-.222l3.347-3.262a.25.25 0 00-.139-.427l-4.626-.672a.25.25 0 01-.188-.137l-2.069-4.192a.25.25 0 00-.448 0L9.706 8.646zM12 7.39l-.948 1.921a1.75 1.75 0 01-1.317.957l-2.12.308 1.534 1.495c.412.402.6.982.503 1.55l-.362 2.11 1.896-.997a1.75 1.75 0 011.629 0l1.895.997-.362-2.11a1.75 1.75 0 01.504-1.55l1.533-1.495-2.12-.308a1.75 1.75 0 01-1.317-.957L12 7.39z'/%3E%3C/svg%3E");
-$schedule-star-filled: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M11.776 4.454a.25.25 0 01.448 0l2.069 4.192a.25.25 0 00.188.137l4.626.672a.25.25 0 01.139.426l-3.348 3.263a.25.25 0 00-.072.222l.79 4.607a.25.25 0 01-.362.263l-4.138-2.175a.25.25 0 00-.232 0l-4.138 2.175a.25.25 0 01-.363-.263l.79-4.607a.25.25 0 00-.071-.222L4.754 9.881a.25.25 0 01.139-.426l4.626-.672a.25.25 0 00.188-.137l2.069-4.192z'/%3E%3C/svg%3E");
-// stylelint-enable @stylistic/max-line-length
+// Every cell — column header, time slot, session — shares one padding.
+$schedule-cell-padding: wp-preset-spacing("30") wp-preset-spacing("40");
+
+// Glyphs come from the Dashicons font, which the favourite-sessions plugin
+// already enqueues wherever the schedule renders.
+
+// They were SVGs traced from `@wordpress/icons` at first, inlined as data URIs.
+// That cannot work here: WordCamp's Remote CSS re-serialises the stylesheet
+// through Jetpack's `sanitize_urls_in_css_properties()`, which only lets
+// `http(s)` through an `url()` and empties everything else — the rules shipped
+// to production as `mask-image: ;`. A font glyph needs no `url()` at all.
+$schedule-icon-clock: "\f469";
+$schedule-icon-star-empty: "\f154";
+$schedule-icon-star-filled: "\f155";
 
 // Accent per track, keyed on the track slug. The block emits
 // `.is-column-track-{slug}` on column headers and `.has-track-{slug}` on
@@ -48,13 +53,17 @@ $schedule-tracks: (
 // every width.
 .wordcamp-schedule {
 
+	// The block's own `h2`, so it already inherits the theme heading styles;
+	// only the size differs, matched to `.wp-block-heading.has-xx-large-font-size`
+	// so the day reads like any other section heading on the site.
 	.wordcamp-schedule__date {
-		font-size: wp-preset-font-size("large");
+		font-size: wp-preset-font-size("xx-large");
 	}
 
+	// `overflow` stays without a radius to clip the outermost cell outlines,
+	// so the grid keeps a single crisp edge.
 	.wordcamp-schedule__day {
 		overflow: hidden;
-		border-radius: $schedule-day-radius;
 		background-color: wp-preset-color("accent-5");
 		box-shadow: 0 0 0 $schedule-outline-width wp-preset-color("contrast");
 	}
@@ -68,29 +77,26 @@ $schedule-tracks: (
 	// so every non-English site reads it as a bug
 	// (https://github.com/WordPress/wordcamp.org/issues/1096). The span is
 	// `aria-hidden`, so swapping the word for a clock costs nothing — same
-	// workaround as WordCamp Rio de Janeiro 2024, drawn from a token instead
-	// of an uploaded image.
+	// workaround as WordCamp Rio de Janeiro 2024, which uses an uploaded image
+	// where this uses a font glyph.
 	.wordcamp-schedule__column-header.is-column-time {
 		font-size: 0;
 
 		&::after {
-			content: "";
+			content: $schedule-icon-clock;
 			display: block;
-			margin-inline: auto;
-			width: $schedule-time-icon-size;
-			height: $schedule-time-icon-size;
-			background-color: wp-preset-color("contrast");
-			mask-image: $schedule-clock;
-			mask-position: center;
-			mask-repeat: no-repeat;
-			mask-size: contain;
+			// An icon font has no meaningful generic fallback.
+			// stylelint-disable-next-line font-family-no-missing-generic-family-keyword
+			font-family: dashicons;
+			font-size: $schedule-time-icon-size;
+			line-height: 1;
 		}
 	}
 
 	.wordcamp-schedule__time-slot-header {
 		margin: 0;
 		border: none;
-		padding: wp-preset-spacing("20");
+		padding: $schedule-cell-padding;
 		background-color: wp-preset-color("contrast");
 		color: wp-preset-color("base");
 		font-size: wp-preset-font-size("medium");
@@ -98,7 +104,7 @@ $schedule-tracks: (
 
 	.wordcamp-schedule__session {
 		border: none;
-		padding: wp-preset-spacing("40");
+		padding: $schedule-cell-padding;
 		background-color: wp-preset-color("base");
 		color: wp-preset-color("contrast");
 
@@ -185,22 +191,20 @@ $schedule-tracks: (
 				box-shadow: 0 0 0 $schedule-outline-width wp-preset-color("contrast");
 			}
 
+			// The block sets the column header padding from behind this same
+			// prefix, so it has to be restated here; the other two cells are
+			// already covered by the stacked rules.
 			.wordcamp-schedule__column-header {
 				margin: 0;
-				padding: wp-preset-spacing("20");
+				padding: $schedule-cell-padding;
 				background-color: wp-preset-color("base");
 			}
 
 			// The time column reads as a gutter here rather than as a header
 			// band, so the stacked inversion is dropped.
 			.wordcamp-schedule__time-slot-header {
-				padding: wp-preset-spacing("20");
 				background-color: wp-preset-color("base");
 				color: wp-preset-color("contrast");
-			}
-
-			.wordcamp-schedule__session {
-				padding: wp-preset-spacing("40");
 			}
 
 			@each $slug, $color in $schedule-tracks {
@@ -213,9 +217,13 @@ $schedule-tracks: (
 	}
 }
 
-// Favourite sessions, from the `wc-post-types` plugin. It renders a dashicon
-// inside the button; masking a star over it keeps the colour on theme tokens
-// and lets the icon preview the action on hover.
+// Favourite sessions, from the `wc-post-types` plugin. It always renders the
+// filled star; swapping the glyph for the hollow one when the session is not
+// favourited makes the button read as a toggle, and hovering previews the fill.
+
+// The plugin sizes its own span with an inline `style` attribute, which no
+// selector can outweigh, so the glyph is drawn on the link instead and the
+// span is hidden.
 .wordcamp-schedule .wcb-session-favourite-icon {
 
 	.dashicon {
@@ -224,17 +232,20 @@ $schedule-tracks: (
 
 	a {
 		display: block;
-		width: $schedule-favourite-icon-size;
-		height: $schedule-favourite-icon-size;
-		background-color: wp-preset-color("contrast");
-		mask-image: $schedule-star-outline;
-		mask-position: center;
-		mask-repeat: no-repeat;
-		mask-size: contain;
-	}
+		color: wp-preset-color("contrast");
 
-	a:is(:hover, :focus) {
-		mask-image: $schedule-star-filled;
+		&::before {
+			content: $schedule-icon-star-empty;
+			// An icon font has no meaningful generic fallback.
+			// stylelint-disable-next-line font-family-no-missing-generic-family-keyword
+			font-family: dashicons;
+			font-size: $schedule-favourite-icon-size;
+			line-height: 1;
+		}
+
+		&:is(:hover, :focus)::before {
+			content: $schedule-icon-star-filled;
+		}
 	}
 }
 
@@ -243,7 +254,10 @@ $schedule-tracks: (
 	outline-offset: -$schedule-favourite-outline-width;
 
 	.wcb-session-favourite-icon a {
-		background-color: wp-preset-color("accent-1");
-		mask-image: $schedule-star-filled;
+		color: wp-preset-color("accent-1");
+
+		&::before {
+			content: $schedule-icon-star-filled;
+		}
 	}
 }
