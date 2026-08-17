@@ -23,8 +23,11 @@ $schedule-time-icon-size: 1.25rem;
 $schedule-favourite-icon-size: 1.5rem;
 $schedule-favourite-outline-width: 5px;
 
-// Every cell — column header, time slot, session — shares one padding.
-$schedule-cell-padding: wp-preset-spacing("30") wp-preset-spacing("40");
+// Every cell — column header, time slot, session — shares one inline padding.
+// Sessions carry the most content, so they get more room vertically.
+$schedule-cell-padding-inline: wp-preset-spacing("40");
+$schedule-cell-padding-block: wp-preset-spacing("30");
+$schedule-session-padding-block: wp-preset-spacing("50");
 
 // Glyphs come from the Dashicons font, which the favourite-sessions plugin
 // already enqueues wherever the schedule renders.
@@ -60,10 +63,9 @@ $schedule-tracks: (
 		font-size: wp-preset-font-size("xx-large");
 	}
 
-	// `overflow` stays without a radius to clip the outermost cell outlines,
-	// so the grid keeps a single crisp edge.
+	// Stacked, the cells carry no outline of their own, so the day draws the
+	// only edge. The grid section takes this back over.
 	.wordcamp-schedule__day {
-		overflow: hidden;
 		background-color: wp-preset-color("accent-5");
 		box-shadow: 0 0 0 $schedule-outline-width wp-preset-color("contrast");
 	}
@@ -89,6 +91,9 @@ $schedule-tracks: (
 			// stylelint-disable-next-line font-family-no-missing-generic-family-keyword
 			font-family: dashicons;
 			font-size: $schedule-time-icon-size;
+			// Dashicons ships a single weight, so an inherited bold is
+			// synthesised by the browser and smears the glyph.
+			font-weight: 400;
 			line-height: 1;
 		}
 	}
@@ -96,7 +101,7 @@ $schedule-tracks: (
 	.wordcamp-schedule__time-slot-header {
 		margin: 0;
 		border: none;
-		padding: $schedule-cell-padding;
+		padding: $schedule-cell-padding-block $schedule-cell-padding-inline;
 		background-color: wp-preset-color("contrast");
 		color: wp-preset-color("base");
 		font-size: wp-preset-font-size("medium");
@@ -104,7 +109,7 @@ $schedule-tracks: (
 
 	.wordcamp-schedule__session {
 		border: none;
-		padding: $schedule-cell-padding;
+		padding: $schedule-session-padding-block $schedule-cell-padding-inline;
 		background-color: wp-preset-color("base");
 		color: wp-preset-color("contrast");
 
@@ -114,7 +119,7 @@ $schedule-tracks: (
 
 		.wordcamp-schedule__session-title {
 			line-height: 1.2;
-			font-size: get-clamp(1.1rem, 1.5rem, 20rem, 72.5rem);
+			font-size: wp-preset-font-size("x-large");
 		}
 
 		.wordcamp-schedule__session-speakers {
@@ -181,8 +186,13 @@ $schedule-tracks: (
 
 			// Gutters wide enough for two cell outlines to meet and read as a
 			// single grid line.
+
+			// Each outer cell contributes its own outline, so the four sides
+			// are already drawn: the day's outline would sit on top of them
+			// and double the line along every edge.
 			.wordcamp-schedule__day {
 				gap: $schedule-outline-width;
+				box-shadow: none;
 			}
 
 			.wordcamp-schedule__column-header,
@@ -196,7 +206,7 @@ $schedule-tracks: (
 			// already covered by the stacked rules.
 			.wordcamp-schedule__column-header {
 				margin: 0;
-				padding: $schedule-cell-padding;
+				padding: $schedule-cell-padding-block $schedule-cell-padding-inline;
 				background-color: wp-preset-color("base");
 			}
 
@@ -240,6 +250,8 @@ $schedule-tracks: (
 			// stylelint-disable-next-line font-family-no-missing-generic-family-keyword
 			font-family: dashicons;
 			font-size: $schedule-favourite-icon-size;
+			// The star sits inside the session title, which is bold.
+			font-weight: 400;
 			line-height: 1;
 		}
 
