@@ -1,0 +1,31 @@
+@use "../../abstracts" as *;
+
+// The "this edition is over" banner WordCamp.org shows on past editions. Its
+// CSS is injected as an inline <style> that lands *after* the remote
+// stylesheet, so every selector here has to outrank the core one.
+
+// Core sets `font-size: 16px` and `line-height: 1.5`: a 24px line box.
+$latest-site-notify-line-box: 1.5rem;
+
+// Core hardcodes `margin-top: calc(44px + admin bar)`, sized for its own 10px
+// padding. Recompute it from our padding so the taller banner stops
+// overlapping the page. The doubled `:not()` beats core's own `!important`.
+html:not(#specificity-hack):not(#specificity-hack) {
+	margin-top: calc(#{$latest-site-notify-line-box} + #{wp-preset-spacing("30")} * 2 + var(--wp-admin--admin-bar--height, 0px)) !important;
+}
+
+div.wordcamp-latest-site-notify {
+	padding: wp-preset-spacing("30");
+	background-color: wp-preset-color("accent-1");
+}
+
+div.wordcamp-latest-site-notify p {
+	color: wp-preset-color("contrast");
+}
+
+// Keep the link color fixed across states; the global rules in
+// `elements/_link.scss` fade the decoration in and thicken it on hover.
+div.wordcamp-latest-site-notify p a:is(:link, :visited, :hover, :focus, :active) {
+	color: inherit;
+	text-decoration-line: underline;
+}
