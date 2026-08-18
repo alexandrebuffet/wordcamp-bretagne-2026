@@ -13,6 +13,7 @@ $wp-preset-aspect-ratios: ();
 // Preset colors (slug → fallback hex). Keys match `--wp--preset--color--{key}`.
 $wp-preset-colors: (
 	"base": #fff,
+	"black": #000,
 	"contrast": #111,
 	"accent-1": #f4d55a,
 	"accent-2": #ec97d5,

@@ -1,0 +1,91 @@
+@use "../../abstracts" as *;
+
+// Cookie consent banner, from the Jetpack `eu-cookie-law` widget: a fixed
+// notice with a link to the cookie policy and a button that stores consent.
+
+// Three constraints from the plugin, all worth knowing before editing.
+
+// Its stylesheet is enqueued in the footer, after the remote CSS, so it wins
+// every tie. Each selector below therefore carries the widget class on top of
+// `#eu-cookie-law` to outweigh the plugin's own ID rules, and the button
+// repeats its `:hover` / `:focus` states explicitly — the plugin locks all
+// three in `#eu-cookie-law input, #eu-cookie-law input:hover,
+// #eu-cookie-law input:focus`.
+
+// The banner is a bare text node with the `<form>` printed *before* it, floated
+// right. Laying the notice out as a column and pushing the form to `order: 1`
+// puts the text back on top: the text node becomes an anonymous flex item, so
+// the reading order is fixed without touching the markup.
+
+// `.hide`, `hide-on-button`, the `fadeIn` animation and the `z-index` are the
+// plugin's dismissal machinery and are left alone.
+
+$cookie-banner-width: 24rem;
+$cookie-banner-inset: 1.5rem;
+$cookie-banner-outline-width: 2px;
+$cookie-banner-shadow-offset: 5px;
+$cookie-pill-radius: 999px;
+
+// The plugin stretches the widget across the whole viewport. Pinned to the
+// bottom-left instead, it clears the schedule's favourites trigger, which is
+// fixed to the opposite corner at the same inset.
+.widget.widget_eu_cookie_law_widget {
+	right: auto;
+	bottom: $cookie-banner-inset;
+	left: $cookie-banner-inset;
+	width: min(#{$cookie-banner-width}, calc(100vw - #{$cookie-banner-inset} * 2));
+}
+
+.widget_eu_cookie_law_widget #eu-cookie-law {
+	display: flex;
+	flex-direction: column;
+	gap: wp-preset-spacing("30");
+	box-sizing: border-box;
+	border: $cookie-banner-outline-width solid wp-preset-color("contrast");
+	border-radius: 0;
+	box-shadow: -#{$cookie-banner-shadow-offset} $cookie-banner-shadow-offset 0 0 wp-preset-color("black");
+	padding: wp-preset-spacing("30");
+	background-color: wp-preset-color("base");
+	color: wp-preset-color("contrast");
+	font-size: wp-preset-font-size("small");
+	line-height: 1.5;
+}
+
+// The plugin blanks the underline on hover and leaves the cursor inherited
+// from the notice, both against the site's link conventions.
+.widget_eu_cookie_law_widget #eu-cookie-law a:is(:link, :visited, :hover, :focus) {
+	color: wp-preset-color("contrast");
+	cursor: pointer;
+	text-decoration-line: underline;
+}
+
+.widget_eu_cookie_law_widget #eu-cookie-law #jetpack-eu-cookie-law-form {
+	order: 1;
+	margin: 0;
+}
+
+// The plugin floats the button into the text and, under 600px, drops it out of
+// the flow onto the notice's reserved bottom padding. Both are undone here so
+// the column layout can place it, and it picks up the site button in the
+// process.
+.widget_eu_cookie_law_widget #eu-cookie-law input.accept,
+.widget_eu_cookie_law_widget #eu-cookie-law input.accept:is(:hover, :focus) {
+	position: static;
+	float: none;
+	margin: 0;
+	border: none;
+	border-radius: $cookie-pill-radius;
+	padding: 0.75rem 1.5rem;
+	width: 100%;
+	background-color: wp-preset-color("contrast");
+	color: wp-preset-color("base");
+	font-family: wp-preset-font-family("unbounded");
+	font-size: wp-preset-font-size("small");
+	font-weight: 400;
+	line-height: 1;
+	cursor: pointer;
+}
+
+.widget_eu_cookie_law_widget #eu-cookie-law input.accept:is(:hover, :focus) {
+	background-color: color-mix(in srgb, var(--wp--preset--color--contrast) 85%, transparent);
+}
