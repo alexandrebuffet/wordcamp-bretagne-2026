@@ -29,12 +29,14 @@
 // and so has no fluid width of its own. Add the class matching the block's
 // avatar size to the block itself: the block prints `width`/`height` inline on
 // the `figure`, so that is what has to be resized — the `img` then just fills
-// it, or the figure would keep its full size around a shrunk image.
+// it, or the figure would keep its full size around a shrunk image. The block
+// sizes the figure on both axes, so the height is set alongside the width
+// rather than left to `auto`.
 @each $size in map.keys($avatar-fluid-sizes) {
 
 	.has-wcbzh-avatar-#{$size} {
 
-		@include avatar-fluid-size($size * 1px);
+		@include avatar-fluid-box($size * 1px);
 
 		img {
 			height: 100% !important;

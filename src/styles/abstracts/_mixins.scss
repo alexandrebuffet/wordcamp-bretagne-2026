@@ -93,22 +93,40 @@
 	@return (min: $size * $avatar-min-ratio, max: $size);
 }
 
-// Fluid, square avatar sizing across the range configured for `$size` in
-// `$avatar-fluid-sizes`. `!important` is required because both CampTix and the
-// avatar block set inline `width`/`height` attributes on the `img`.
-@mixin avatar-fluid-size($size) {
+// The width an avatar of `$size` renders at: a `clamp()` across its configured
+// range, or a plain length when that range is a single value.
+@function avatar-fluid-width($size) {
 	$range: avatar-fluid-range($size);
 	$min: map.get($range, "min");
 	$max: map.get($range, "max");
 
+	@if $min == $max {
+
+		@return $max;
+	}
+
+	@return get-clamp($min, $max, $avatar-breakpoint-min, $avatar-breakpoint-max);
+}
+
+// Fluid avatar sizing for an `img` that carries its own size, as CampTix
+// renders it: the width drives the box and the height follows. `!important` is
+// required because the plugin sets `width`/`height` attributes on the `img`.
+@mixin avatar-fluid-size($size) {
 	aspect-ratio: 1;
 	height: auto !important;
+	width: avatar-fluid-width($size) !important;
+}
 
-	@if $min == $max {
-		width: $max !important;
-	} @else {
-		width: get-clamp($min, $max, $avatar-breakpoint-min, $avatar-breakpoint-max) !important;
-	}
+// Fluid avatar sizing for a wrapper that is sized on both axes, as the WordCamp
+// avatar block sizes its `figure` with an inline `width` and `height`: leaving
+// the height to `auto` would fight that inline value, so both are set to the
+// same fluid length.
+@mixin avatar-fluid-box($size) {
+	$width: avatar-fluid-width($size);
+
+	aspect-ratio: 1;
+	height: $width !important;
+	width: $width !important;
 }
 
 // Emits one fluid rule per `avatar-{size}` class, so whatever size the
