@@ -1,3 +1,6 @@
+@use "sass:map";
+@use "abstracts" as *;
+
 .is-wcbzh-text-wrap-balance {
 	text-wrap: balance;
 }
@@ -20,4 +23,19 @@
 
 .has-wcbzh-margin-block-start-0 {
 	margin-block-start: 0 !important;
+}
+
+// Fluid sizing for the WordCamp avatar block (`figure > img`), which renders a
+// fixed pixel size and so has no fluid width of its own. Add the class matching
+// the block's avatar size to the block wrapper.
+@each $size in map.keys($avatar-fluid-sizes) {
+
+	.has-wcbzh-avatar-#{$size} {
+		width: fit-content;
+
+		img {
+
+			@include avatar-fluid-size($size * 1px);
+		}
+	}
 }

@@ -58,6 +58,29 @@ $breakpoints: (
 // Camptix layout breakpoints (historical values from remote CSS).
 $camptix-tickets-breakpoint-max: 767px;
 
+// Fluid avatar configuration: one entry per size WordPress renders, giving the
+// width the avatar shrinks to on a narrow viewport and the width it stops
+// growing at. The keys mirror the sizes the WordCamp avatar block offers in its
+// inspector, and CampTix echoes the same number in its `avatar-{size}` class.
+// Ranges are set per size rather than by a single ratio: the small ones barely
+// need to shrink, the large ones have to fit a 320px viewport.
+$avatar-fluid-sizes: (
+	24: (min: 24px, max: 24px),
+	48: (min: 40px, max: 48px),
+	96: (min: 60px, max: 96px),
+	128: (min: 80px, max: 128px),
+	256: (min: 120px, max: 256px),
+	512: (min: 200px, max: 512px)
+);
+
+// Fallback share of the nominal size, for a size absent from the table above
+// (CampTix accepts any `avatar_size`). Matches the 96px → 60px pair.
+$avatar-min-ratio: 0.625;
+
+// Viewport range over which an avatar grows from its floor to its full size.
+$avatar-breakpoint-min: map.get($breakpoints, "sm");
+$avatar-breakpoint-max: map.get($breakpoints, "lg");
+
 // Builds `var(--wp--preset--{preset-type}--{token}[, fallback])` from a slug
 // → fallback map.
 @function wp-preset-var($preset-type, $token, $fallback-map) {

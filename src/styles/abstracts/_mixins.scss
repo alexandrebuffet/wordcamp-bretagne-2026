@@ -79,3 +79,48 @@
 		@content;
 	}
 }
+
+// The `(min, max)` range configured for an avatar of `$size`, falling back to
+// `$avatar-min-ratio` of the size for a value the table does not cover.
+@function avatar-fluid-range($size) {
+	$key: math.div($size, 1px);
+
+	@if map.has-key($avatar-fluid-sizes, $key) {
+
+		@return map.get($avatar-fluid-sizes, $key);
+	}
+
+	@return (min: $size * $avatar-min-ratio, max: $size);
+}
+
+// Fluid, square avatar sizing across the range configured for `$size` in
+// `$avatar-fluid-sizes`. `!important` is required because both CampTix and the
+// avatar block set inline `width`/`height` attributes on the `img`.
+@mixin avatar-fluid-size($size) {
+	$range: avatar-fluid-range($size);
+	$min: map.get($range, "min");
+	$max: map.get($range, "max");
+
+	aspect-ratio: 1;
+	height: auto !important;
+
+	@if $min == $max {
+		width: $max !important;
+	} @else {
+		width: get-clamp($min, $max, $avatar-breakpoint-min, $avatar-breakpoint-max) !important;
+	}
+}
+
+// Emits one fluid rule per `avatar-{size}` class, so whatever size the
+// shortcode or block is configured with is handled without touching the CSS.
+// `$prefix` is the class stem to build on, `avatar` by default.
+@mixin avatar-fluid-sizes($sizes: map.keys($avatar-fluid-sizes), $prefix: "avatar") {
+
+	@each $size in $sizes {
+
+		&.#{$prefix}-#{$size} {
+
+			@include avatar-fluid-size($size * 1px);
+		}
+	}
+}

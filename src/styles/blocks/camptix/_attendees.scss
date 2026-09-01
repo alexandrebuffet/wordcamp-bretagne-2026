@@ -42,14 +42,19 @@
 #tix-attendees .avatar {
     border-radius: 50%;
     flex-shrink: 0;
-    height: auto !important;
-    width: clamp(60px, 10vw, 96px) !important;
-    aspect-ratio: 1;
     border: 2px solid currentColor;
     filter: grayscale(100%);
     object-fit: contain;
     background-color: var(--wp--preset--color--white);
     box-shadow: var(--wp--preset--shadow--shadow-1);
+
+    // Fallback for an avatar size the shortcode renders without a matching
+    // `avatar-{size}` class.
+    @include avatar-fluid-size(96px);
+
+    // The shortcode's `avatar_size` attribute (96 by default, 128 for the
+    // volunteers list) lands on the `img` as `avatar-{size}`.
+    @include avatar-fluid-sizes;
 }
 
 #tix-attendees .tix-attendee-name {
