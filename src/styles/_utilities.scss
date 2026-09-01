@@ -25,17 +25,21 @@
 	margin-block-start: 0 !important;
 }
 
-// Fluid sizing for the WordCamp avatar block (`figure > img`), which renders a
-// fixed pixel size and so has no fluid width of its own. Add the class matching
-// the block's avatar size to the block wrapper.
+// Fluid sizing for the WordCamp avatar block, which renders a fixed pixel size
+// and so has no fluid width of its own. Add the class matching the block's
+// avatar size to the block itself: the block prints `width`/`height` inline on
+// the `figure`, so that is what has to be resized — the `img` then just fills
+// it, or the figure would keep its full size around a shrunk image.
 @each $size in map.keys($avatar-fluid-sizes) {
 
 	.has-wcbzh-avatar-#{$size} {
-		width: fit-content;
+
+		@include avatar-fluid-size($size * 1px);
 
 		img {
-
-			@include avatar-fluid-size($size * 1px);
+			height: 100% !important;
+			width: 100% !important;
+			object-fit: cover;
 		}
 	}
 }
