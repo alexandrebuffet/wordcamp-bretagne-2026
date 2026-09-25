@@ -9,10 +9,15 @@
     structure, classes and plugin strings are verbatim. SVG stars are
     collapsed to one path per star, and the list keeps two feedback entries.
 
-    Two views, one after the other in the post content:
+    Two views, one after the other in the post content, each after an `<hr>`:
     - the form attendees fill in (`form#sft-feedback`), preceded by a notice
       only organisers see while the event has not started;
-    - the list of approved feedback (`div.speaker-feedback`).
+    - the list of approved feedback (`div.speaker-feedback`), only for the
+      session's speakers and organisers.
+
+    Logged out, the page holds the form alone, straight after its `<hr>`, and
+    the "Vous déposez un retour en tant que" notice gives way to a sign-in
+    notice and a name and an e-mail field; that variant follows the form below.
 
     States the plugin script (assets/js/script.js) adds client-side, absent
     from this capture:
@@ -123,6 +128,32 @@
     <input type="hidden" name="sft-post" value="0">
     <input type="submit" value="Envoyer le retour">
 </form>
+
+<!--
+    Logged out: in place of the "Vous déposez un retour en tant que" notice,
+    the form opens on this field, straight after its `<h3>`.
+-->
+<div class="speaker-feedback__field">
+    <div class="speaker-feedback__notice">
+        <p><a href="https://login.wordpress.org/?from=bretagne.wordcamp.org&amp;redirect_to=https%3A%2F%2Fbretagne.wordcamp.org%2F2026%2Fsession%2Fet-si-on-organisait-des-reunions-pas-chiantes%2Ffeedback%2F&amp;locale=fr_FR">Connectez-vous à votre compte WordPress.org,</a> ou ajoutez votre nom et votre e-mail pour laisser un retour.</p>
+    </div>
+
+    <div class="speaker-feedback__field-inline">
+        <label for="sft-author-name">
+            Nom
+            <span class="is-required" aria-hidden="true">*</span>
+        </label>
+        <input type="text" id="sft-author-name" name="sft-author-name" required="">
+    </div>
+
+    <div class="speaker-feedback__field-inline">
+        <label for="sft-author-email">
+            E-mail
+            <span class="is-required" aria-hidden="true">*</span>
+        </label>
+        <input type="email" id="sft-author-email" name="sft-author-email" required="">
+    </div>
+</div>
 
 <hr>
 

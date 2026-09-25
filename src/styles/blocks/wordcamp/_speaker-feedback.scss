@@ -4,7 +4,9 @@
 // share the `.speaker-feedback` root, one after the other on a session opened
 // with `?sft_feedback=1`: the form attendees fill in (`form#sft-feedback`), and
 // the list of approved feedback its speakers and the organisers read
-// (`div.speaker-feedback`). See `samples/wordcamp-speaker-feedback.html`.
+// (`div.speaker-feedback`). Logged out, the form opens on a name and an e-mail
+// field instead of the "leaving feedback as" notice. See
+// `samples/wordcamp-speaker-feedback.html`.
 
 // The plugin stylesheet loads before the remote CSS, so restating one of its
 // selectors is enough to override it; that is why the selectors below are left
@@ -27,11 +29,21 @@
 $speaker-feedback-outline-width: 2px;
 $speaker-feedback-pill-radius: 999px;
 
+// Frames: the notices, the notifications toggle and each feedback card.
+$speaker-feedback-box-radius: 1rem;
+
+// Room on each side of the separators the plugin prints in the post content,
+// between the session and the form, and between the form and the list.
+$speaker-feedback-section-gap: wp-preset-spacing("50");
+
 // Same text fields as the CampTix forms: a thinner line than the frames, and
 // the same radius.
 $speaker-feedback-field-border-width: 1px;
 $speaker-feedback-field-radius: 32px;
 $speaker-feedback-field-padding: 1rem 1.25rem;
+
+// Between two fields of the form.
+$speaker-feedback-field-gap: wp-preset-spacing("30");
 
 $speaker-feedback-card-padding-block: wp-preset-spacing("30");
 $speaker-feedback-card-padding-inline: wp-preset-spacing("40");
@@ -47,6 +59,13 @@ $speaker-feedback-overview-star-size: 1.75rem;
 // The palette has no red, so errors keep the plugin's own.
 $speaker-feedback-error-color: #d94f4f;
 
+// The plugin prints an `<hr>` before the form — or before the notice
+// organisers get above it — and another before the list. The next element's
+// own top margin is smaller, and collapses into the separator's.
+hr:has(+ .speaker-feedback, + .speaker-feedback__notice + .speaker-feedback) {
+	margin-block: $speaker-feedback-section-gap;
+}
+
 // Notices: above the form, after it is sent, under an invalid field, and
 // between the sections of the list. The one above the form sits straight in
 // the post content, whose constrained layout caps its width: without
@@ -55,8 +74,9 @@ $speaker-feedback-error-color: #d94f4f;
 	box-sizing: border-box;
 	margin: wp-preset-spacing("30") 0;
 	border: $speaker-feedback-outline-width solid wp-preset-color("contrast");
+	border-radius: $speaker-feedback-box-radius;
 	padding: wp-preset-spacing("30");
-	background-color: wp-preset-color("accent-5");
+	background-color: transparent;
 	color: wp-preset-color("contrast");
 	font-size: wp-preset-font-size("medium");
 
@@ -74,39 +94,53 @@ $speaker-feedback-error-color: #d94f4f;
 // Form.
 
 .speaker-feedback__field {
-	margin-block-end: wp-preset-spacing("40");
+	margin-block-end: $speaker-feedback-field-gap;
 
-	// A field-level error sits right under its counter.
-	.speaker-feedback__notice {
+	// A field-level error sits right under its counter. Logged out, the
+	// sign-in notice is a plain one, at the top of the first field.
+	.speaker-feedback__notice.is-error {
 		margin-block: 0.5rem 0;
 	}
 }
 
+// Logged out, the name and e-mail fields. The plugin lays them out inline,
+// label on the left; they are stacked here like every other field.
+.speaker-feedback__field-inline {
+	display: block;
+	margin-block-end: $speaker-feedback-field-gap;
+}
+
 .speaker-feedback__field > label,
+.speaker-feedback__field-inline label,
 .speaker-feedback__field-rating legend {
 	display: block;
 	margin-block-end: 0.5rem;
+	margin-inline-end: 0;
 	padding: 0;
 	font-weight: 700;
 }
 
-.speaker-feedback__field textarea {
+.speaker-feedback__field textarea,
+.speaker-feedback__field-inline input {
 	display: block;
 	box-sizing: border-box;
 	border: $speaker-feedback-field-border-width solid wp-preset-color("contrast");
 	border-radius: $speaker-feedback-field-radius;
 	padding: $speaker-feedback-field-padding;
 	width: 100%;
-	min-height: 8rem;
 	background-color: wp-preset-color("base");
 	color: wp-preset-color("contrast");
 	font: inherit;
-	resize: vertical;
 
 	&:focus-visible {
 		outline: $speaker-feedback-outline-width solid wp-preset-color("contrast");
 		outline-offset: 2px;
 	}
+}
+
+.speaker-feedback__field textarea {
+	min-height: 8rem;
+	resize: vertical;
 }
 
 // Character counter, lined up with the text inside the field.
@@ -194,7 +228,7 @@ $speaker-feedback-error-color: #d94f4f;
 	border-radius: 0;
 	padding: wp-preset-spacing("30");
 	max-width: none;
-	background-color: wp-preset-color("accent-5");
+	background-color: transparent;
 	color: wp-preset-color("contrast");
 	font-size: wp-preset-font-size("medium");
 }
@@ -202,6 +236,7 @@ $speaker-feedback-error-color: #d94f4f;
 .speaker-feedback__notifications {
 	margin-block: wp-preset-spacing("30");
 	border: $speaker-feedback-outline-width solid wp-preset-color("contrast");
+	border-radius: $speaker-feedback-box-radius;
 }
 
 .speaker-feedback__notifications label,
@@ -232,8 +267,8 @@ $speaker-feedback-error-color: #d94f4f;
 
 .speaker-feedback__helpful.is-helpful label {
 	border: $speaker-feedback-outline-width solid wp-preset-color("contrast");
-	background: wp-preset-color("accent-4");
-	color: wp-preset-color("contrast");
+	background: wp-preset-color("contrast");
+	color: wp-preset-color("base");
 }
 
 // Hovering a helpful feedback previews taking the mark back off.
@@ -337,6 +372,7 @@ $speaker-feedback-error-color: #d94f4f;
 
 .speaker-feedback__comment-body {
 	border: $speaker-feedback-outline-width solid wp-preset-color("contrast");
+	border-radius: $speaker-feedback-box-radius;
 	box-shadow: wp-preset-shadow("shadow-1");
 	background-color: wp-preset-color("base");
 }

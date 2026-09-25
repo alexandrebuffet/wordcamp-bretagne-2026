@@ -26,6 +26,9 @@ $cookie-banner-outline-width: 2px;
 $cookie-banner-shadow-offset: 5px;
 $cookie-pill-radius: 999px;
 
+// Same corners as the session feedback cards.
+$cookie-banner-radius: 1rem;
+
 // The plugin stretches the widget across the whole viewport. Pinned to the
 // bottom-left instead, it clears the schedule's favourites trigger, which is
 // fixed to the opposite corner at the same inset.
@@ -42,7 +45,7 @@ $cookie-pill-radius: 999px;
 	gap: wp-preset-spacing("30");
 	box-sizing: border-box;
 	border: $cookie-banner-outline-width solid wp-preset-color("contrast");
-	border-radius: 0;
+	border-radius: $cookie-banner-radius;
 	box-shadow: -#{$cookie-banner-shadow-offset} $cookie-banner-shadow-offset 0 0 wp-preset-color("black");
 	padding: wp-preset-spacing("30");
 	background-color: wp-preset-color("base");
