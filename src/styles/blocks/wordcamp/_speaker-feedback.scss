@@ -1,0 +1,411 @@
+@use "../../abstracts" as *;
+
+// Session feedback, from the `wordcamp-speaker-feedback` plugin. Two views
+// share the `.speaker-feedback` root, one after the other on a session opened
+// with `?sft_feedback=1`: the form attendees fill in (`form#sft-feedback`), and
+// the list of approved feedback its speakers and the organisers read
+// (`div.speaker-feedback`). See `samples/wordcamp-speaker-feedback.html`.
+
+// The plugin stylesheet loads before the remote CSS, so restating one of its
+// selectors is enough to override it; that is why the selectors below are left
+// unscoped, like the plugin's own. Its script adds a few state classes that the
+// page source never shows, all handled here:
+// - `.speaker-feedback__notice.is-success` / `.is-error` on the form once it is
+//   sent, plus one `p.speaker-feedback__notice.is-error` under each invalid
+//   field, whose textarea gets `.has-error`;
+// - `.is-disabled` on a notifications toggle, `.is-helpful` on a feedback its
+//   speaker marked as helpful, and `.is-inflight` on either while the request
+//   runs.
+
+// `no-descending-specificity` is off for this file. It compares every selector
+// ending on `label`, but those are three unrelated sets of elements — the
+// rating stars, the toggles, the filters — that never compete for the same
+// label, and the stars' state rules have to keep the plugin's specificity and
+// order to work at all.
+// stylelint-disable no-descending-specificity
+
+$speaker-feedback-outline-width: 2px;
+$speaker-feedback-pill-radius: 999px;
+
+// Same text fields as the CampTix forms: a thinner line than the frames, and
+// the same radius.
+$speaker-feedback-field-border-width: 1px;
+$speaker-feedback-field-radius: 32px;
+$speaker-feedback-field-padding: 1rem 1.25rem;
+
+$speaker-feedback-card-padding-block: wp-preset-spacing("30");
+$speaker-feedback-card-padding-inline: wp-preset-spacing("40");
+
+// Stars are drawn by the plugin as an inline SVG filled with `currentColor`.
+// The outline is a stroke kept at a fixed width whatever the star size.
+$speaker-feedback-star-color-full: wp-preset-color("accent-1");
+$speaker-feedback-star-color-empty: wp-preset-color("base");
+$speaker-feedback-star-outline-width: 2px;
+$speaker-feedback-meta-star-outline-width: 1.5px;
+$speaker-feedback-overview-star-size: 1.75rem;
+
+// The palette has no red, so errors keep the plugin's own.
+$speaker-feedback-error-color: #d94f4f;
+
+// Notices: above the form, after it is sent, under an invalid field, and
+// between the sections of the list. The one above the form sits straight in
+// the post content, whose constrained layout caps its width: without
+// `border-box`, the padding and border would push it out past the text.
+.speaker-feedback__notice {
+	box-sizing: border-box;
+	margin: wp-preset-spacing("30") 0;
+	border: $speaker-feedback-outline-width solid wp-preset-color("contrast");
+	padding: wp-preset-spacing("30");
+	background-color: wp-preset-color("accent-5");
+	color: wp-preset-color("contrast");
+	font-size: wp-preset-font-size("medium");
+
+	&.is-success {
+		border-color: wp-preset-color("contrast");
+		background-color: wp-preset-color("accent-4");
+	}
+
+	&.is-error {
+		border-color: $speaker-feedback-error-color;
+		background-color: color-mix(in srgb, #{$speaker-feedback-error-color} 12%, #{wp-preset-color("base")});
+	}
+}
+
+// Form.
+
+.speaker-feedback__field {
+	margin-block-end: wp-preset-spacing("40");
+
+	// A field-level error sits right under its counter.
+	.speaker-feedback__notice {
+		margin-block: 0.5rem 0;
+	}
+}
+
+.speaker-feedback__field > label,
+.speaker-feedback__field-rating legend {
+	display: block;
+	margin-block-end: 0.5rem;
+	padding: 0;
+	font-weight: 700;
+}
+
+.speaker-feedback__field textarea {
+	display: block;
+	box-sizing: border-box;
+	border: $speaker-feedback-field-border-width solid wp-preset-color("contrast");
+	border-radius: $speaker-feedback-field-radius;
+	padding: $speaker-feedback-field-padding;
+	width: 100%;
+	min-height: 8rem;
+	background-color: wp-preset-color("base");
+	color: wp-preset-color("contrast");
+	font: inherit;
+	resize: vertical;
+
+	&:focus-visible {
+		outline: $speaker-feedback-outline-width solid wp-preset-color("contrast");
+		outline-offset: 2px;
+	}
+}
+
+// Character counter, lined up with the text inside the field.
+.speaker-feedback__field .speaker-feedback__field-help {
+	margin-block-start: 0.25rem;
+	padding-inline: 1.25rem;
+	font-size: wp-preset-font-size("small");
+}
+
+// Rating. The fieldset takes the plugin's focus ring only from the keyboard:
+// clicking a star focuses its radio too.
+.speaker-feedback__field-rating:focus-within {
+	outline: none;
+}
+
+.speaker-feedback__field-rating:has(:focus-visible) {
+	outline: $speaker-feedback-outline-width solid wp-preset-color("contrast");
+	outline-offset: 0.5rem;
+}
+
+.speaker-feedback__field-rating path,
+.speaker-feedback__meta-rating path {
+	stroke: wp-preset-color("contrast");
+	stroke-linejoin: round;
+	stroke-width: $speaker-feedback-star-outline-width;
+	vector-effect: non-scaling-stroke;
+}
+
+// The plugin lights the stars up to the checked one, and previews the rating
+// under the pointer or focus, by flipping each label's `color` between two
+// values. The rules below restate its own in the same order — they only work
+// in that order — with the site's two colours.
+
+// One addition. The plugin meant to light every star before the hovered one
+// too, but its rule (`.speaker-feedback__field-rating :hover input + label`)
+// needs a hovered element *around* the radios, and they sit straight in the
+// fieldset, so it never matches: with no rating yet, only the hovered star
+// lit up. `:has()` reaches the hovered radio from the fieldset instead.
+.speaker-feedback__field-rating label {
+	padding-inline-end: 0.25rem;
+	color: $speaker-feedback-star-color-full;
+}
+
+.speaker-feedback__field-rating input:checked ~ label {
+	color: $speaker-feedback-star-color-empty;
+}
+
+.speaker-feedback__field-rating input:checked + label {
+	color: $speaker-feedback-star-color-full;
+}
+
+.speaker-feedback__field-rating:has(input:is(:hover, :focus)) label {
+	color: $speaker-feedback-star-color-full;
+}
+
+.speaker-feedback__field-rating input:is(:hover, :focus) ~ label {
+	color: $speaker-feedback-star-color-empty;
+}
+
+.speaker-feedback__field-rating input:is(:hover, :focus) + label {
+	color: $speaker-feedback-star-color-full;
+}
+
+// Feedback list.
+
+.speaker-feedback__meta-rating path {
+	stroke-width: $speaker-feedback-meta-star-outline-width;
+}
+
+.speaker-feedback__meta-rating .star__full {
+	color: $speaker-feedback-star-color-full;
+}
+
+.speaker-feedback__meta-rating .star__empty {
+	color: $speaker-feedback-star-color-empty;
+}
+
+// The notifications toggle, and the "helpful" toggle at the foot of each
+// feedback. Both are a line of text and a `label` wrapping a visually hidden
+// checkbox, which the plugin styles as a button.
+.speaker-feedback__notifications,
+.speaker-feedback__helpful {
+	flex-wrap: wrap;
+	gap: wp-preset-spacing("20") wp-preset-spacing("30");
+	border-radius: 0;
+	padding: wp-preset-spacing("30");
+	max-width: none;
+	background-color: wp-preset-color("accent-5");
+	color: wp-preset-color("contrast");
+	font-size: wp-preset-font-size("medium");
+}
+
+.speaker-feedback__notifications {
+	margin-block: wp-preset-spacing("30");
+	border: $speaker-feedback-outline-width solid wp-preset-color("contrast");
+}
+
+.speaker-feedback__notifications label,
+.speaker-feedback__helpful label {
+	flex-shrink: 0;
+	border: $speaker-feedback-outline-width solid wp-preset-color("contrast");
+	border-radius: $speaker-feedback-pill-radius;
+	padding: 0.75rem 1.25rem;
+	background-color: wp-preset-color("base");
+	color: wp-preset-color("contrast");
+	font-family: wp-preset-font-family("unbounded");
+	font-size: wp-preset-font-size("small");
+	line-height: 1;
+}
+
+.speaker-feedback__notifications label:is(:hover, :focus-within),
+.speaker-feedback__helpful label:is(:hover, :focus-within) {
+	border: $speaker-feedback-outline-width solid wp-preset-color("contrast");
+	background-color: wp-preset-color("contrast");
+	color: wp-preset-color("base");
+}
+
+.speaker-feedback__notifications label:has(:focus-visible),
+.speaker-feedback__helpful label:has(:focus-visible) {
+	outline: $speaker-feedback-outline-width solid wp-preset-color("contrast");
+	outline-offset: 2px;
+}
+
+.speaker-feedback__helpful.is-helpful label {
+	border: $speaker-feedback-outline-width solid wp-preset-color("contrast");
+	background: wp-preset-color("accent-4");
+	color: wp-preset-color("contrast");
+}
+
+// Hovering a helpful feedback previews taking the mark back off.
+.speaker-feedback__helpful.is-helpful label:is(:hover, :focus-within) {
+	border: $speaker-feedback-outline-width solid wp-preset-color("contrast");
+	background: wp-preset-color("base");
+	color: wp-preset-color("contrast");
+}
+
+.speaker-feedback__helpful.is-helpful label::before {
+	margin-inline-end: 0.25em;
+}
+
+// Only the speakers the feedback is for get the checkbox. Anyone else — an
+// organiser, a co-speaker — sees the same label with nothing to toggle, so it
+// stops reacting to the pointer.
+.speaker-feedback__helpful label:not(:has(input)) {
+	pointer-events: none;
+}
+
+.speaker-feedback__notifications.is-inflight label,
+.speaker-feedback__helpful.is-inflight label {
+	opacity: 0.6;
+}
+
+// Overall rating: the label and its stars on one line, the count below.
+.speaker-feedback__overview {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.25rem 0.5rem;
+	margin-block: wp-preset-spacing("40");
+
+	strong {
+		margin-inline-end: 0;
+		font-family: wp-preset-font-family("unbounded");
+	}
+
+	p {
+		flex-basis: 100%;
+		margin: 0;
+	}
+
+	.speaker-feedback__meta-rating svg {
+		width: $speaker-feedback-overview-star-size;
+		height: $speaker-feedback-overview-star-size;
+	}
+}
+
+.speaker-feedback__filters {
+	gap: wp-preset-spacing("30");
+	margin-block-end: wp-preset-spacing("50");
+	font-size: wp-preset-font-size("medium");
+
+	// The select is as wide as its longest option, too wide to sit next to
+	// its label on a phone.
+	.speaker-feedback__filter-sort {
+		flex-wrap: wrap;
+		gap: 0.5rem;
+		margin-inline-end: 0;
+	}
+
+	.speaker-feedback__filter-sort select {
+		box-sizing: border-box;
+		margin-inline-start: 0;
+		max-width: 100%;
+		border: $speaker-feedback-field-border-width solid wp-preset-color("contrast");
+		border-radius: $speaker-feedback-pill-radius;
+		padding: 0.5rem 1rem;
+		background-color: wp-preset-color("base");
+		color: wp-preset-color("contrast");
+		font: inherit;
+	}
+
+	.speaker-feedback__filter-helpful label {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+		cursor: pointer;
+	}
+
+	input[type="checkbox"] {
+		flex-shrink: 0;
+		margin: 0;
+		width: 1.125em;
+		height: 1.125em;
+		accent-color: wp-preset-color("contrast");
+	}
+}
+
+// Each feedback is a card: author and date, the answers, then the helpful
+// toggle as a band across the foot.
+.speaker-feedback__list {
+	display: grid;
+	gap: wp-preset-spacing("50");
+}
+
+.speaker-feedback__comment {
+	margin-block-end: 0;
+}
+
+.speaker-feedback__comment-body {
+	border: $speaker-feedback-outline-width solid wp-preset-color("contrast");
+	box-shadow: wp-preset-shadow("shadow-1");
+	background-color: wp-preset-color("base");
+}
+
+.speaker-feedback__comment-meta {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
+	gap: 0.5rem wp-preset-spacing("30");
+	border-block-end: $speaker-feedback-outline-width solid wp-preset-color("contrast");
+	padding: $speaker-feedback-card-padding-block $speaker-feedback-card-padding-inline;
+
+	// The plugin floats the avatar next to the name, for its admin table.
+	img {
+		float: none;
+		margin: 0;
+	}
+}
+
+.speaker-feedback__comment-author {
+	display: flex;
+	align-items: center;
+	gap: 0.75rem;
+	font-family: wp-preset-font-family("unbounded");
+	font-size: wp-preset-font-size("medium");
+
+	.avatar {
+		flex-shrink: 0;
+		border: $speaker-feedback-outline-width solid wp-preset-color("contrast");
+		border-radius: 50%;
+		filter: grayscale(100%);
+	}
+
+	.fn {
+		font-weight: 700;
+	}
+}
+
+.speaker-feedback__comment-metadata {
+	font-size: wp-preset-font-size("small");
+}
+
+.speaker-feedback__comment-content {
+	margin-block-start: 0;
+	padding: $speaker-feedback-card-padding-inline;
+
+	> :first-child {
+		margin-block-start: 0;
+	}
+
+	> :last-child {
+		margin-block-end: 0;
+	}
+}
+
+.speaker-feedback__question {
+	margin-block: wp-preset-spacing("30") 0.25rem;
+	font-family: wp-preset-font-family("unbounded");
+	font-size: wp-preset-font-size("small");
+	font-weight: 700;
+}
+
+.speaker-feedback__answer {
+	margin-block: 0;
+}
+
+.speaker-feedback__comment .speaker-feedback__helpful {
+	margin: 0;
+	border-block-start: $speaker-feedback-outline-width solid wp-preset-color("contrast");
+	padding: $speaker-feedback-card-padding-block $speaker-feedback-card-padding-inline;
+}

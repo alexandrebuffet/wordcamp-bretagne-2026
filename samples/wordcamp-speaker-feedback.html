@@ -1,0 +1,284 @@
+<!--
+    Rendered markup of the `wordcamp-speaker-feedback` plugin on a session page
+    opened with `?sft_feedback=1`. Captured from
+    https://bretagne.wordcamp.org/2026/session/et-si-on-organisait-des-reunions-pas-chiantes/?sft_feedback=1
+    while logged in as an organiser.
+
+    Feedback is only shown to the session's speakers and to organisers, so
+    names, avatars, links and answers are replaced with placeholders; the
+    structure, classes and plugin strings are verbatim. SVG stars are
+    collapsed to one path per star, and the list keeps two feedback entries.
+
+    Two views, one after the other in the post content:
+    - the form attendees fill in (`form#sft-feedback`), preceded by a notice
+      only organisers see while the event has not started;
+    - the list of approved feedback (`div.speaker-feedback`).
+
+    States the plugin script (assets/js/script.js) adds client-side, absent
+    from this capture:
+    - `#speaker-feedback-notice` gets `speaker-feedback__notice is-success`
+      or `is-error` and a `<p>` once the form is sent;
+    - an invalid field gets `.has-error` on its textarea and a
+      `<p class="speaker-feedback__notice is-error" id="sft-{key}-help">`
+      appended to its `.speaker-feedback__field`;
+    - `.speaker-feedback__notifications` toggles `.is-disabled`, and
+      `.speaker-feedback__helpful` toggles `.is-helpful`; both carry
+      `.is-inflight` while the request runs.
+
+    The helpful `<label>` holds a checkbox only for the speakers the feedback
+    is for (the script reads `input.dataset.commentId`); an organiser gets the
+    bare label, as captured here.
+-->
+
+<div class="speaker-feedback__notice">
+    <p>
+        Responsables de l’organisation&nbsp;: Ce formulaire est toujours visible pour vous à des fins de test et de stylisation, mais il n’est pas visible pour les personnes visitant le site avant le début de l’évènement.
+    </p>
+</div>
+
+<form id="sft-feedback" class="speaker-feedback">
+
+    <h3>Laisser un retour</h3>
+
+    <div class="speaker-feedback__notice">
+        <p>Vous déposez un retour en tant que <strong>Prénom Nom</strong>.</p>
+    </div>
+
+    <div id="speaker-feedback-notice"></div>
+
+    <div class="speaker-feedback__field">
+        <fieldset class="speaker-feedback__field-rating" id="sft-rating">
+            <legend>
+                Évaluez cette session
+                <span class="is-required" aria-hidden="true">*</span>
+            </legend>
+            <input type="radio" name="sft-rating" value="0" checked="" aria-label="Aucune étoile">
+            <input type="radio" id="sft-rating-val-1" name="sft-rating" value="1">
+            <label for="sft-rating-val-1">
+                <span class="screen-reader-text">1 étoile</span>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" height="20" width="20" role="img" aria-hidden="true"><path d="M10 1l3 6 6 .75-4.12 4.62L16 19l-6-3-6 3 1.13-6.63L1 7.75 7 7z"></path></svg>
+            </label>
+            <input type="radio" id="sft-rating-val-2" name="sft-rating" value="2">
+            <label for="sft-rating-val-2">
+                <span class="screen-reader-text">2 étoiles</span>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" height="20" width="20" role="img" aria-hidden="true"><path d="M10 1l3 6 6 .75-4.12 4.62L16 19l-6-3-6 3 1.13-6.63L1 7.75 7 7z"></path></svg>
+            </label>
+            <input type="radio" id="sft-rating-val-3" name="sft-rating" value="3">
+            <label for="sft-rating-val-3">
+                <span class="screen-reader-text">3 étoiles</span>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" height="20" width="20" role="img" aria-hidden="true"><path d="M10 1l3 6 6 .75-4.12 4.62L16 19l-6-3-6 3 1.13-6.63L1 7.75 7 7z"></path></svg>
+            </label>
+            <input type="radio" id="sft-rating-val-4" name="sft-rating" value="4">
+            <label for="sft-rating-val-4">
+                <span class="screen-reader-text">4 étoiles</span>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" height="20" width="20" role="img" aria-hidden="true"><path d="M10 1l3 6 6 .75-4.12 4.62L16 19l-6-3-6 3 1.13-6.63L1 7.75 7 7z"></path></svg>
+            </label>
+            <input type="radio" id="sft-rating-val-5" name="sft-rating" value="5">
+            <label for="sft-rating-val-5">
+                <span class="screen-reader-text">5 étoiles</span>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" height="20" width="20" role="img" aria-hidden="true"><path d="M10 1l3 6 6 .75-4.12 4.62L16 19l-6-3-6 3 1.13-6.63L1 7.75 7 7z"></path></svg>
+            </label>
+        </fieldset>
+    </div>
+
+    <div class="speaker-feedback__field">
+        <label for="sft-q1">
+            Comment était cette session&nbsp;?
+            <span class="is-required" aria-hidden="true">*</span>
+        </label>
+        <textarea id="sft-q1" name="sft-q1" aria-describedby="sft-q1-extra" data-maxlength="5000" required=""></textarea>
+        <span class="screen-reader-text" id="sft-q1-extra">
+            Max 5&nbsp;000 caractères.
+        </span>
+        <div class="speaker-feedback__field-help">
+            0/5000
+        </div>
+    </div>
+    <div class="speaker-feedback__field">
+        <label for="sft-q2">
+            Que pourrait-il être amélioré dans cette session&nbsp;?
+        </label>
+        <textarea id="sft-q2" name="sft-q2" aria-describedby="sft-q2-extra" data-maxlength="5000"></textarea>
+        <span class="screen-reader-text" id="sft-q2-extra">
+            Max 5&nbsp;000 caractères.
+        </span>
+        <div class="speaker-feedback__field-help">
+            0/5000
+        </div>
+    </div>
+    <div class="speaker-feedback__field">
+        <label for="sft-q3">
+            Avez-vous des retours additionnels&nbsp;?
+        </label>
+        <textarea id="sft-q3" name="sft-q3" aria-describedby="sft-q3-extra" data-maxlength="5000"></textarea>
+        <span class="screen-reader-text" id="sft-q3-extra">
+            Max 5&nbsp;000 caractères.
+        </span>
+        <div class="speaker-feedback__field-help">
+            0/5000
+        </div>
+    </div>
+
+    <input type="hidden" name="sft-author" value="0">
+    <input type="hidden" name="sft-post" value="0">
+    <input type="submit" value="Envoyer le retour">
+</form>
+
+<hr>
+
+<div class="speaker-feedback">
+    <h2>Retour de session</h2>
+
+    <p class="speaker-feedback__notice">
+        Les notifications par e-mail aux conférenciers sont envoyées une fois par jour lorsque de nouveaux retours ont été
+        approuvés. La désactivation de ces e-mails pour un·e orateur·ice désactivera les notifications de retours pour eux sur tous
+        les sites WordCamp.
+    </p>
+
+    <!-- One per speaker of the session. Toggles `.is-disabled`. -->
+    <div class="speaker-feedback__notifications ">
+        <span id="sft-notifications-description-0">
+            <span class="speaker-feedback__notifications-speaker-name">
+                speaker-username
+            </span>
+            <span class="speaker-feedback__notifications-label-text">
+                Les notifications de retour sont activées.
+            </span>
+        </span>
+        <label>
+            <input type="checkbox" aria-describedby="sft-notifications-description-0" data-user-id="0">
+            <span class="speaker-feedback__notifications-toggle-text">
+                Désactiver
+            </span>
+        </label>
+    </div>
+
+    <div class="speaker-feedback__overview">
+        <strong>Note globale&nbsp;:</strong>
+        <span role="img" aria-label="5 étoiles" class="speaker-feedback__meta-rating">
+            <span class="star star__full"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" height="20" width="20" role="img" aria-hidden="true"><path d="M10 1l3 6 6 .75-4.12 4.62L16 19l-6-3-6 3 1.13-6.63L1 7.75 7 7z"></path></svg></span>
+            <span class="star star__full"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" height="20" width="20" role="img" aria-hidden="true"><path d="M10 1l3 6 6 .75-4.12 4.62L16 19l-6-3-6 3 1.13-6.63L1 7.75 7 7z"></path></svg></span>
+            <span class="star star__full"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" height="20" width="20" role="img" aria-hidden="true"><path d="M10 1l3 6 6 .75-4.12 4.62L16 19l-6-3-6 3 1.13-6.63L1 7.75 7 7z"></path></svg></span>
+            <span class="star star__full"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" height="20" width="20" role="img" aria-hidden="true"><path d="M10 1l3 6 6 .75-4.12 4.62L16 19l-6-3-6 3 1.13-6.63L1 7.75 7 7z"></path></svg></span>
+            <span class="star star__full"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" height="20" width="20" role="img" aria-hidden="true"><path d="M10 1l3 6 6 .75-4.12 4.62L16 19l-6-3-6 3 1.13-6.63L1 7.75 7 7z"></path></svg></span>
+        </span>
+
+        <p>2 propositions</p>
+    </div>
+
+    <form action="" method="get" class="speaker-feedback__filters">
+        <div class="speaker-feedback__filter-sort">
+            <label for="sft-filter-sort">
+                Trier par
+            </label>
+            <select id="sft-filter-sort" name="forder">
+                <option selected="selected" value="oldest">
+                    Les plus anciens en premier
+                </option>
+                <option value="newest">
+                    Les plus récents en premier
+                </option>
+                <option value="highest">
+                    Les mieux notés en premier
+                </option>
+            </select>
+        </div>
+        <div class="speaker-feedback__filter-helpful">
+            <label>
+                <input name="helpful" type="checkbox" value="yes" id="sft-filter-helpful">
+                Afficher uniquement le retour marqué comme utile
+            </label>
+        </div>
+        <input type="submit" value="Filter">
+    </form>
+
+    <p class="speaker-feedback__notice">
+        Seuls les destinataires des retours peuvent marquer les soumissions comme étant utiles.
+    </p>
+
+    <div class="speaker-feedback__list comment-list">
+        <!-- Marked as helpful; the author name is a link to their website. -->
+        <div class="comment even thread-even depth-1 speaker-feedback__comment">
+            <article id="speaker-feedback-2" class="speaker-feedback__comment-body comment-body">
+                <header class="speaker-feedback__comment-meta comment-meta">
+                    <div class="speaker-feedback__comment-author comment-author vcard">
+                        <img alt="" src="https://secure.gravatar.com/avatar/?s=32&amp;d=mm&amp;r=g" srcset="https://secure.gravatar.com/avatar/?s=64&amp;d=mm&amp;r=g 2x" class="avatar avatar-32 photo" height="32" width="32">
+                        <b class="fn"><a href="https://example.com/" class="url" rel="ugc external nofollow">participant-1</a></b>
+                    </div><!-- .comment-author -->
+
+                    <div class="speaker-feedback__comment-metadata comment-metadata">
+                        <time datetime="2026-09-18T16:01:51+02:00">
+                            18 septembre 2026
+                        </time>
+                    </div><!-- .comment-metadata -->
+                </header><!-- .comment-meta -->
+
+                <div class="speaker-feedback__comment-content comment-content">
+                    <p class="speaker-feedback__question">Note</p>
+                    <p class="speaker-feedback__answer">
+                        <span role="img" aria-label="5 étoiles" class="speaker-feedback__meta-rating">
+                            <span class="star star__full"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" height="20" width="20" role="img" aria-hidden="true"><path d="M10 1l3 6 6 .75-4.12 4.62L16 19l-6-3-6 3 1.13-6.63L1 7.75 7 7z"></path></svg></span>
+                            <span class="star star__full"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" height="20" width="20" role="img" aria-hidden="true"><path d="M10 1l3 6 6 .75-4.12 4.62L16 19l-6-3-6 3 1.13-6.63L1 7.75 7 7z"></path></svg></span>
+                            <span class="star star__full"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" height="20" width="20" role="img" aria-hidden="true"><path d="M10 1l3 6 6 .75-4.12 4.62L16 19l-6-3-6 3 1.13-6.63L1 7.75 7 7z"></path></svg></span>
+                            <span class="star star__full"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" height="20" width="20" role="img" aria-hidden="true"><path d="M10 1l3 6 6 .75-4.12 4.62L16 19l-6-3-6 3 1.13-6.63L1 7.75 7 7z"></path></svg></span>
+                            <span class="star star__full"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" height="20" width="20" role="img" aria-hidden="true"><path d="M10 1l3 6 6 .75-4.12 4.62L16 19l-6-3-6 3 1.13-6.63L1 7.75 7 7z"></path></svg></span>
+                        </span>
+                    </p>
+
+                    <p class="speaker-feedback__question">Comment était cette session&nbsp;?</p><p class="speaker-feedback__answer">Réponse à la première question.</p>
+                </div><!-- .comment-content -->
+
+                <footer class="speaker-feedback__helpful is-helpful">
+                    <span id="sft-helpful-2">
+                        Ce retour a t’il été utile&nbsp;?
+                    </span>
+                    <label>
+                        Oui
+                    </label>
+                </footer>
+            </article><!-- .comment-body -->
+        </div><!-- #comment-## -->
+
+        <!-- Not marked as helpful; answers every question, one with an emoji. -->
+        <div class="comment odd alt thread-odd thread-alt depth-1 speaker-feedback__comment">
+            <article id="speaker-feedback-3" class="speaker-feedback__comment-body comment-body">
+                <header class="speaker-feedback__comment-meta comment-meta">
+                    <div class="speaker-feedback__comment-author comment-author vcard">
+                        <img alt="" src="https://secure.gravatar.com/avatar/?s=32&amp;d=mm&amp;r=g" srcset="https://secure.gravatar.com/avatar/?s=64&amp;d=mm&amp;r=g 2x" class="avatar avatar-32 photo" height="32" width="32">
+                        <b class="fn">Participant 2</b>
+                    </div><!-- .comment-author -->
+
+                    <div class="speaker-feedback__comment-metadata comment-metadata">
+                        <time datetime="2026-09-18T20:34:54+02:00">
+                            18 septembre 2026
+                        </time>
+                    </div><!-- .comment-metadata -->
+                </header><!-- .comment-meta -->
+
+                <div class="speaker-feedback__comment-content comment-content">
+                    <p class="speaker-feedback__question">Note</p>
+                    <p class="speaker-feedback__answer">
+                        <span role="img" aria-label="5 étoiles" class="speaker-feedback__meta-rating">
+                            <span class="star star__full"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" height="20" width="20" role="img" aria-hidden="true"><path d="M10 1l3 6 6 .75-4.12 4.62L16 19l-6-3-6 3 1.13-6.63L1 7.75 7 7z"></path></svg></span>
+                            <span class="star star__full"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" height="20" width="20" role="img" aria-hidden="true"><path d="M10 1l3 6 6 .75-4.12 4.62L16 19l-6-3-6 3 1.13-6.63L1 7.75 7 7z"></path></svg></span>
+                            <span class="star star__full"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" height="20" width="20" role="img" aria-hidden="true"><path d="M10 1l3 6 6 .75-4.12 4.62L16 19l-6-3-6 3 1.13-6.63L1 7.75 7 7z"></path></svg></span>
+                            <span class="star star__full"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" height="20" width="20" role="img" aria-hidden="true"><path d="M10 1l3 6 6 .75-4.12 4.62L16 19l-6-3-6 3 1.13-6.63L1 7.75 7 7z"></path></svg></span>
+                            <span class="star star__full"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" height="20" width="20" role="img" aria-hidden="true"><path d="M10 1l3 6 6 .75-4.12 4.62L16 19l-6-3-6 3 1.13-6.63L1 7.75 7 7z"></path></svg></span>
+                        </span>
+                    </p>
+
+                    <p class="speaker-feedback__question">Comment était cette session&nbsp;?</p><p class="speaker-feedback__answer">Réponse à la première question, sur plusieurs lignes quand elle est longue.</p><p class="speaker-feedback__question">Que pourrait-il être amélioré dans cette session&nbsp;?</p><p class="speaker-feedback__answer">Réponse avec un emoji <img draggable="false" role="img" class="emoji" alt="😉" src="https://s.w.org/images/core/emoji/17.0.2/svg/1f609.svg"></p>
+                </div><!-- .comment-content -->
+
+                <footer class="speaker-feedback__helpful ">
+                    <span id="sft-helpful-3">
+                        Ce retour a t’il été utile&nbsp;?
+                    </span>
+                    <label>
+                        Oui
+                    </label>
+                </footer>
+            </article><!-- .comment-body -->
+        </div><!-- #comment-## -->
+    </div>
+</div>
