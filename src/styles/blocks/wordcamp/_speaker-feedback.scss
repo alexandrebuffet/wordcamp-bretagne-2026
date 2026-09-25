@@ -45,6 +45,9 @@ $speaker-feedback-field-padding: 1rem 1.25rem;
 // Between two fields of the form.
 $speaker-feedback-field-gap: wp-preset-spacing("30");
 
+// Between two feedback cards.
+$speaker-feedback-card-gap: wp-preset-spacing("30");
+
 $speaker-feedback-card-padding-block: wp-preset-spacing("30");
 $speaker-feedback-card-padding-inline: wp-preset-spacing("40");
 
@@ -363,7 +366,7 @@ hr:has(+ .speaker-feedback, + .speaker-feedback__notice + .speaker-feedback) {
 // toggle as a band across the foot.
 .speaker-feedback__list {
 	display: grid;
-	gap: wp-preset-spacing("50");
+	gap: $speaker-feedback-card-gap;
 }
 
 .speaker-feedback__comment {
@@ -436,8 +439,10 @@ hr:has(+ .speaker-feedback, + .speaker-feedback__notice + .speaker-feedback) {
 	font-weight: 700;
 }
 
+// Answers step down from the body size, closer to the questions above them.
 .speaker-feedback__answer {
 	margin-block: 0;
+	font-size: wp-preset-font-size("medium");
 }
 
 .speaker-feedback__comment .speaker-feedback__helpful {
